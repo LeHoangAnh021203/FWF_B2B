@@ -28,7 +28,6 @@ type CaseStudy = {
 }
 
 export default function Home() {
-  const [requestType, setRequestType] = useState<"booking" | "quote">("booking")
   const [isScrolled, setIsScrolled] = useState(false)
   const [fullName, setFullName] = useState("")
   const [phone, setPhone] = useState("")
@@ -124,7 +123,6 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          requestType,
           fullName: fullName.trim(),
           phone: phone.trim(),
           email: email.trim(),
@@ -142,11 +140,7 @@ export default function Home() {
         throw new Error("BOOKING_SUBMIT_FAILED")
       }
 
-      setSubmitSuccess(
-        requestType === "quote"
-          ? "Yêu cầu báo giá đã được gửi thành công. Face Wash Fox sẽ liên hệ với bạn trong thời gian sớm nhất!"
-          : "Đăng ký thành công. Face Wash Fox sẽ liên hệ với bạn trong thời gian sớm nhất!",
-      )
+      setSubmitSuccess("Đăng ký thành công. Face Wash Fox sẽ liên hệ với bạn trong thời gian sớm nhất!")
       setFullName("")
       setPhone("")
       setEmail("")
@@ -168,12 +162,12 @@ export default function Home() {
     <div>
       {/* Navigation */}
       <header
-        className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-background/80 backdrop-blur-md" : "bg-transparent"
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white/90 backdrop-blur-md border-b border-orange-100" : "bg-transparent"
           }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
-            <Link href="/" className="text-2xl font-bold">
+            <Link href="/" className="text-2xl font-bold text-orange-500">
               Face Wash Fox
             </Link>
             <NavigationMenu>
@@ -181,7 +175,7 @@ export default function Home() {
                 <NavigationMenuItem>
                   <NavigationMenuLink
                     asChild
-                    className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-white/80 px-4 py-2 text-sm font-medium text-orange-950 transition-colors hover:bg-orange-100 hover:text-orange-900 focus:bg-orange-100 focus:text-orange-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
                   >
                     <Link href="https://menu.facewashfox.com/">
                       FOX MENU
@@ -191,7 +185,7 @@ export default function Home() {
                 <NavigationMenuItem>
                   <NavigationMenuLink
                     asChild
-                    className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-white/80 px-4 py-2 text-sm font-medium text-orange-950 transition-colors hover:bg-orange-100 hover:text-orange-900 focus:bg-orange-100 focus:text-orange-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
                   >
                     <Link href="https://cuahang.facewashfox.com/">
                       FOX MAP
@@ -200,13 +194,13 @@ export default function Home() {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-            <Button onClick={handleScrollToBooking}>Liên Hệ</Button>
+            <Button onClick={handleScrollToBooking} className="bg-orange-500 text-white hover:bg-orange-600">Liên Hệ</Button>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="min-h-screen relative overflow-hidden bg-zinc-950">
+      <section className="min-h-screen relative overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white">
         <HeroBackground />
         <motion.div className="container mx-auto px-4 pt-32 pb-16 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-16">
@@ -214,7 +208,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-xl md:text-xl lg:text-4xl font-bold text-white mb-6"
+              className="text-xl md:text-xl lg:text-4xl font-bold text-orange-950 mb-6"
             >
               FACE WASH FOX – GIẢI PHÁP CHĂM SÓC TINH TẾ DÀNH CHO DOANH NGHIỆP
             </motion.h1>
@@ -222,7 +216,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-[18px] text-gray-300 mb-8"
+              className="text-[18px] text-stone-700 mb-8"
             >
               <span className="text-orange-400 font-semibold">Face Wash Fox</span> mang đến giải pháp chăm sóc da
               và chăm sóc sức khỏe tinh thần ngay tại nơi làm việc,
@@ -236,14 +230,14 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button asChild size="lg" className="bg-white text-black hover:bg-gray-100">
+              <Button asChild size="lg" className="bg-orange-500 text-white hover:bg-orange-600">
                 <Link href="#services">
                   Tham Khảo Dịch Vụ
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
-                <Link href="#fox-swat">Xem Fox Swat</Link>
+              <Button asChild size="lg" variant="outline" className="border-orange-500 text-orange-600 hover:bg-orange-100">
+                <Link href="#fox-swat">Xem Dịch Vụ</Link>
               </Button>
             </motion.div>
           </div>
@@ -264,7 +258,7 @@ export default function Home() {
           </motion.div>
         </motion.div>
         <div className="absolute bottom-0 left-0 right-0 text-center pb-8 z-10">
-          <ChevronDown className="w-6 h-6 text-white animate-bounce mx-auto" />
+          <ChevronDown className="w-6 h-6 text-orange-500 animate-bounce mx-auto" />
         </div>
       </section>
 
@@ -295,13 +289,13 @@ export default function Home() {
         </div>
       </section> */}
 
-      <section id="fox-swat" className="py-20 bg-orange-400 via-background to-background">
+      <section id="fox-swat" className="py-20 bg-gradient-to-b from-orange-100 via-white to-orange-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">DỊCH VỤ CUNG CẤP</h2>
-            <p className="text-xl md:text-xl font-bold mb-4">Hai giải gháp chăm sóc da linh hoạt cho doanh nghiệp</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-black w-full">DỊCH VỤ CUNG CẤP</h2>
+            <p className="text-xl md:text-xl font-bold mb-4 text-black">Hai giải gháp chăm sóc da linh hoạt cho doanh nghiệp</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 ">
             {caseStudies.map((study, index) => (
               <motion.div
                 key={study.title}
@@ -311,8 +305,8 @@ export default function Home() {
                 className="group cursor-pointer"
               >
                 <Card>
-                  <CardContent className="p-5">
-                    <div className="relative h-64 mb-6 rounded-t-lg overflow-hidden bg-black/20">
+                  <CardContent className="p-5 bg-white text-orange-500">
+                    <div className="relative h-64 mb-6 rounded-t-lg overflow-hidden bg-orange-50">
                       <Image
                         src={study.image || "/placeholder.svg"}
                         alt={study.title}
@@ -352,18 +346,18 @@ export default function Home() {
           </div>
         </div>
         <Dialog open={Boolean(selectedStudy)} onOpenChange={(open) => !open && setSelectedStudy(null)}>
-          <DialogContent className="border-white/10 bg-[#020817] text-white sm:max-w-2xl">
+          <DialogContent className="border-orange-200 bg-white text-orange-950 sm:max-w-2xl">
             {selectedStudy ? (
               <div className="space-y-6">
                 <DialogHeader className="space-y-3">
                   <DialogTitle className="text-2xl leading-tight">{selectedStudy.title}</DialogTitle>
                   <div
-                    className="text-sm leading-6 text-gray-300"
+                    className="text-sm leading-6 text-stone-600"
                     dangerouslySetInnerHTML={{ __html: selectedStudy.description }}
                   />
                 </DialogHeader>
 
-                <ul className="space-y-3 text-base leading-7 text-gray-200">
+                <ul className="space-y-3 text-base leading-7 text-stone-700">
                   {selectedStudy.detailPoints.map((point) => (
                     <li key={point} className="flex gap-3">
                       <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" />
@@ -378,10 +372,10 @@ export default function Home() {
       </section>
 
       {/* Services Grid */}
-      <section id="services" className="py-20 bg-gradient-to-b from-[#020817] via-background to-background">
+      <section id="services" className="py-20 bg-gradient-to-b from-white via-orange-50 to-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">TẠI SAO CHỌN FACE WASH FOX?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">TẠI SAO CHỌN FOX SWAT?</h2>
 
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -393,21 +387,21 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="group relative"
               >
-                <div className="relative p-8 rounded-2xl bg-[#0a101f]/40 border border-gray-800/50 backdrop-blur-sm hover:bg-[#0a101f]/60 transition-all duration-300">
+                <div className="relative p-8 rounded-2xl bg-white border border-orange-200 shadow-sm hover:bg-orange-50 transition-all duration-300">
                   <div className="mb-6 relative">
-                    <div className="w-16 h-16 rounded-full bg-[#1a1f2e] flex items-center justify-center relative group-hover:scale-110 transition-transform duration-300">
-                      <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl group-hover:bg-primary/30 transition-all duration-300" />
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center relative group-hover:scale-110 transition-transform duration-300">
+                      <div className="absolute inset-0 rounded-full bg-orange-500/70 blur-xl group-hover:bg-orange-300/70 transition-all duration-300" />
+                      <div className="absolute inset-0 rounded-full bg-orange opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <div className="relative z-10 text-primary [&_svg]:w-8 [&_svg]:h-8">
                         <industry.icon />
                       </div>
                     </div>
                   </div>
-                  <h3 className="text-[18px] font-semibold mb-3 text-white group-hover:text-primary transition-colors duration-300">
+                  <h3 className="text-[18px] font-semibold mb-3 text-orange-950 group-hover:text-orange-600 transition-colors duration-300">
                     {industry.name}
                   </h3>
                   <p
-                    className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300 text-[14px]"
+                    className="text-stone-600 group-hover:text-stone-800 transition-colors duration-300 text-[14px]"
                     dangerouslySetInnerHTML={{ __html: industry.description }}
                   />
                 </div>
@@ -419,24 +413,20 @@ export default function Home() {
 
 
       {/* CTA Section */}
-      <section id="booking" className="py-20 bg-white via-background to-background">
-        
+      <section id="booking" className="py-20 bg-gradient-to-b from-white via-orange-50 to-white">
+
         <div className="container mx-auto px-4">
-          
+
           <div className="max-w-2xl mx-auto text-center mb">
-          <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  onClick={() => setRequestType("quote")}
-                  className="h-16 w-full rounded-[14px] bg-orange-500 px-8 text-[1.35rem] font-extrabold text-white transition-opacity hover:opacity-90 md:text-[1.65rem]"
-                >
-                  {isSubmitting
-                    ? "Đang gửi thông tin..."
-                    : "Liên hệ để nhận báo giá"}
-                </button>    
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 pt-5 text-black">Doanh Nghiệp Của Bạn Đã Sẵn Sàng Chưa?</h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Hãy cung cấp cho chúng tôi thông tin của bạn để chúng tôi biết rằng bạn đã sẵn sàng để hợp tác với FWF nhé.
+            <a
+              href="tel:0889866666"
+              className="flex h-16 w-full items-center justify-center rounded-[14px] bg-orange-500 px-8 text-center text-[1.35rem] font-extrabold text-white transition-opacity hover:opacity-90 md:text-[1.65rem]"
+            >
+              Liên hệ để nhận báo giá
+            </a>
+            <h2 className="text-xl md:text-3xl font-bold mb-4 pt-5 text-black">Doanh Nghiệp Của Bạn Đã Sẵn Sàng Chưa?</h2>
+            <p className="text-[16px] text-muted-foreground mb-8">
+              Hãy cung cấp cho chúng tôi thông tin của bạn để chúng tôi biết rằng bạn đã sẵn sàng <br /> để hợp tác với FWF nhé!
             </p>
             <form className="mt-8 space-y-6 md:mt-10" onSubmit={handleSubmitBooking}>
               <div className="grid gap-5 md:grid-cols-2">
@@ -448,7 +438,7 @@ export default function Home() {
                     onChange={(event) => setFullName(event.target.value)}
                     placeholder="Nhập họ và tên"
                     required
-                    className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                    className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
                   />
                 </div>
 
@@ -461,7 +451,7 @@ export default function Home() {
                     onChange={(event) => setPhone(event.target.value)}
                     placeholder="Nhập số điện thoại"
                     required
-                    className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                    className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
                   />
                 </div>
               </div>
@@ -474,7 +464,7 @@ export default function Home() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   placeholder="Nhập email"
-                  className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                  className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
                 />
               </div>
 
@@ -493,7 +483,7 @@ export default function Home() {
                 </div>
                 <select
                   id="booking-branch"
-                  className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 text-[1.05rem] text-[#111827] outline-none focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                  className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-[1.05rem] text-[#111827] outline-none focus:border-orange-400 md:text-[1.15rem]"
                   value={selectedBranchId}
                   onChange={(event) => setSelectedBranchId(Number(event.target.value))}
                 >
@@ -527,7 +517,7 @@ export default function Home() {
                   value={note}
                   onChange={(event) => setNote(event.target.value)}
                   placeholder="Hãy cho chúng tôi biết bạn đang cần gì..."
-                  className="w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 py-4 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                  className="w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 py-4 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
                 />
               </div>
 
@@ -535,16 +525,17 @@ export default function Home() {
                 <p className="text-[0.95rem] text-[#dc2626]">{submitError}</p>
               ) : null}
 
+
               <button
                 type="submit"
                 disabled={isSubmitting}
-                onClick={() => setRequestType("booking")}
                 className="h-16 w-full rounded-[14px] bg-orange-500 px-8 text-[1.35rem] font-extrabold text-white transition-opacity hover:opacity-90 md:text-[1.65rem]"
               >
-                {isSubmitting
-                  ? "Đang gửi thông tin..."
-                  : "Đặt lịch tư vấn miễn phí"}
+                {isSubmitting ? "Đang gửi thông tin..." : "Đặt lịch tư vấn miễn phí"}
               </button>
+
+
+
 
 
 
@@ -552,14 +543,14 @@ export default function Home() {
           </div>
         </div>
         <Dialog open={Boolean(submitSuccess)} onOpenChange={(open) => !open && setSubmitSuccess("")}>
-          <DialogContent className="border-white/10 bg-[#020817] text-white sm:max-w-md">
+          <DialogContent className="border-orange-200 bg-white text-orange-950 sm:max-w-md">
             <DialogHeader className="space-y-3 text-center">
               <DialogTitle className="text-2xl">Đăng ký thành công</DialogTitle>
             </DialogHeader>
-            <p className="text-center text-base leading-7 text-gray-300">{submitSuccess}</p>
+            <p className="text-center text-base leading-7 text-stone-600">{submitSuccess}</p>
             <Button
               type="button"
-              className="w-full bg-gradient-to-r from-[#f04b9a] to-[#7c3aed] text-white hover:opacity-90"
+              className="w-full bg-orange-500 text-white hover:bg-orange-600"
               onClick={() => setSubmitSuccess("")}
             >
               Đóng
@@ -569,7 +560,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-background border-t">
+      <footer className="bg-orange-50 border-t border-orange-100">
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-4">

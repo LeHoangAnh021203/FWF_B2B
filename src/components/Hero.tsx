@@ -15,9 +15,9 @@ export function HeroBackground() {
                 </video>
 
                 <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/25 via-transparent to-zinc-950/45" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/45 via-zinc-950/15 to-transparent" />
-                    <div className="absolute inset-0 [background:radial-gradient(90%_60%_at_10%_70%,rgba(0,0,0,.55)_0%,transparent_70%)]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-orange-50/30 to-orange-100/65" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-100/60 via-white/20 to-transparent" />
+                    <div className="absolute inset-0 [background:radial-gradient(90%_60%_at_10%_70%,rgba(251,146,60,.28)_0%,transparent_70%)]" />
                 </div>
             </div>
         </>
