@@ -201,14 +201,14 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="min-h-screen relative overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white">
-        <HeroBackground />
+       
         <motion.div className="container mx-auto px-4 pt-32 pb-16 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-xl md:text-xl lg:text-4xl font-bold text-orange-950 mb-6"
+              className="text-xl md:text-xl lg:text-4xl font-bold text-orange-500 mb-6"
             >
               FACE WASH FOX – GIẢI PHÁP CHĂM SÓC TINH TẾ DÀNH CHO DOANH NGHIỆP
             </motion.h1>
@@ -290,8 +290,8 @@ export default function Home() {
       <section id="fox-swat" className="py-20 bg-gradient-to-b from-orange-100 via-white to-orange-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-black w-full">DỊCH VỤ CUNG CẤP</h2>
-            <p className="text-xl md:text-xl font-bold mb-4 text-black">Hai giải gháp chăm sóc da linh hoạt cho doanh nghiệp</p>
+            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-black w-full">DỊCH VỤ CUNG CẤP</h2>
+            <p className="text-xl md:text-[18px] font-bold mb-4 text-black">Hai giải gháp chăm sóc da linh hoạt cho doanh nghiệp</p>
           </div>
           <div className="grid md:grid-cols-2 gap-8 ">
             {caseStudies.map((study, index) => (
