@@ -236,9 +236,7 @@ export default function Home() {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-orange-500 text-orange-600 hover:bg-orange-100">
-                <Link href="#fox-swat">Xem Dịch Vụ</Link>
-              </Button>
+
             </motion.div>
           </div>
           <motion.div
