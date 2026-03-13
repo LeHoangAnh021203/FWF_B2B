@@ -28,6 +28,7 @@ type CaseStudy = {
 }
 
 export default function Home() {
+  const [requestType, setRequestType] = useState<"booking" | "quote">("booking")
   const [isScrolled, setIsScrolled] = useState(false)
   const [fullName, setFullName] = useState("")
   const [phone, setPhone] = useState("")
@@ -123,6 +124,7 @@ export default function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          requestType,
           fullName: fullName.trim(),
           phone: phone.trim(),
           email: email.trim(),
@@ -140,7 +142,11 @@ export default function Home() {
         throw new Error("BOOKING_SUBMIT_FAILED")
       }
 
-      setSubmitSuccess("Đăng ký thành công. Face Wash Fox sẽ liên hệ với bạn trong thời gian sớm nhất!")
+      setSubmitSuccess(
+        requestType === "quote"
+          ? "Yêu cầu báo giá đã được gửi thành công. Face Wash Fox sẽ liên hệ với bạn trong thời gian sớm nhất!"
+          : "Đăng ký thành công. Face Wash Fox sẽ liên hệ với bạn trong thời gian sớm nhất!",
+      )
       setFullName("")
       setPhone("")
       setEmail("")
@@ -210,16 +216,18 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="text-xl md:text-xl lg:text-4xl font-bold text-white mb-6"
             >
-              FACE WASH FOX – GIẢI PHÁP CHĂM SÓC TINH TẾ CHO DOANH NGHIỆP
+              FACE WASH FOX – GIẢI PHÁP CHĂM SÓC TINH TẾ DÀNH CHO DOANH NGHIỆP
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-xl text-gray-300 mb-8"
+              className="text-[18px] text-gray-300 mb-8"
             >
               <span className="text-orange-400 font-semibold">Face Wash Fox</span> mang đến giải pháp chăm sóc da
-              và chăm sóc sức khỏe tinh thần ngay tại nơi làm việc, giúp doanh nghiệp nâng tầm phúc lợi dành cho nhân
+              và chăm sóc sức khỏe tinh thần ngay tại nơi làm việc,
+              <br />
+              giúp doanh nghiệp nâng tầm phúc lợi dành cho nhân
               viên theo cách thiết thực, gần gũi và tạo dấu ấn riêng.
             </motion.p>
             <motion.div
@@ -287,11 +295,11 @@ export default function Home() {
         </div>
       </section> */}
 
-      <section id="fox-swat" className="py-20 bg-gradient-to-b from-[#020817] via-background to-background">
+      <section id="fox-swat" className="py-20 bg-orange-400 via-background to-background">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">DỊCH VỤ CUNG CẤP</h2>
-            <p className="text-xl md:text-xl font-bold mb-4">Hai Giải Pháp Chăm Sóc Da Linh Hoạt Cho Doanh Nghiệp</p>
+            <p className="text-xl md:text-xl font-bold mb-4">Hai giải gháp chăm sóc da linh hoạt cho doanh nghiệp</p>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             {caseStudies.map((study, index) => (
@@ -303,7 +311,7 @@ export default function Home() {
                 className="group cursor-pointer"
               >
                 <Card>
-                  <CardContent className="p-0">
+                  <CardContent className="p-5">
                     <div className="relative h-64 mb-6 rounded-t-lg overflow-hidden bg-black/20">
                       <Image
                         src={study.image || "/placeholder.svg"}
@@ -395,12 +403,13 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-primary transition-colors duration-300">
+                  <h3 className="text-[18px] font-semibold mb-3 text-white group-hover:text-primary transition-colors duration-300">
                     {industry.name}
                   </h3>
-                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-                    {industry.description}
-                  </p>
+                  <p
+                    className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300 text-[14px]"
+                    dangerouslySetInnerHTML={{ __html: industry.description }}
+                  />
                 </div>
               </motion.div>
             ))}
@@ -410,10 +419,22 @@ export default function Home() {
 
 
       {/* CTA Section */}
-      <section id="booking" className="py-20 bg-gradient-to-b from-[#020817] via-background to-background">
+      <section id="booking" className="py-20 bg-white via-background to-background">
+        
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Doanh Nghiệp Của Bạn Đã Sẵn Sàng Chưa?</h2>
+          
+          <div className="max-w-2xl mx-auto text-center mb">
+          <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  onClick={() => setRequestType("quote")}
+                  className="h-16 w-full rounded-[14px] bg-orange-500 px-8 text-[1.35rem] font-extrabold text-white transition-opacity hover:opacity-90 md:text-[1.65rem]"
+                >
+                  {isSubmitting
+                    ? "Đang gửi thông tin..."
+                    : "Liên hệ để nhận báo giá"}
+                </button>    
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 pt-5 text-black">Doanh Nghiệp Của Bạn Đã Sẵn Sàng Chưa?</h2>
             <p className="text-lg text-muted-foreground mb-8">
               Hãy cung cấp cho chúng tôi thông tin của bạn để chúng tôi biết rằng bạn đã sẵn sàng để hợp tác với FWF nhé.
             </p>
@@ -427,7 +448,7 @@ export default function Home() {
                     onChange={(event) => setFullName(event.target.value)}
                     placeholder="Nhập họ và tên"
                     required
-                    className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-[#f1dce9] px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                    className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
                   />
                 </div>
 
@@ -440,7 +461,7 @@ export default function Home() {
                     onChange={(event) => setPhone(event.target.value)}
                     placeholder="Nhập số điện thoại"
                     required
-                    className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-[#f1dce9] px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                    className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
                   />
                 </div>
               </div>
@@ -453,7 +474,7 @@ export default function Home() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   placeholder="Nhập email"
-                  className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-[#f1dce9] px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                  className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
                 />
               </div>
 
@@ -472,7 +493,7 @@ export default function Home() {
                 </div>
                 <select
                   id="booking-branch"
-                  className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-[#f1dce9] px-5 text-[1.05rem] text-[#111827] outline-none focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                  className="h-14 w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 text-[1.05rem] text-[#111827] outline-none focus:border-[#a855f7]/50 md:text-[1.15rem]"
                   value={selectedBranchId}
                   onChange={(event) => setSelectedBranchId(Number(event.target.value))}
                 >
@@ -506,7 +527,7 @@ export default function Home() {
                   value={note}
                   onChange={(event) => setNote(event.target.value)}
                   placeholder="Hãy cho chúng tôi biết bạn đang cần gì..."
-                  className="w-full rounded-[14px] border border-[#c7cdd5] bg-[#f1dce9] px-5 py-4 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
+                  className="w-full rounded-[14px] border border-[#c7cdd5] bg-orange-200 px-5 py-4 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-[#a855f7]/50 md:text-[1.15rem]"
                 />
               </div>
 
@@ -517,12 +538,16 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="h-16 w-full rounded-[14px] bg-gradient-to-r from-[#f04b9a] to-[#7c3aed] px-8 text-[1.35rem] font-extrabold text-white transition-opacity hover:opacity-90 md:text-[1.65rem]"
+                onClick={() => setRequestType("booking")}
+                className="h-16 w-full rounded-[14px] bg-orange-500 px-8 text-[1.35rem] font-extrabold text-white transition-opacity hover:opacity-90 md:text-[1.65rem]"
               >
                 {isSubmitting
                   ? "Đang gửi thông tin..."
-                  : "Đặt lịch ngay - Miễn phí tư vấn"}
+                  : "Đặt lịch tư vấn miễn phí"}
               </button>
+
+
+
             </form>
           </div>
         </div>
@@ -549,8 +574,9 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Face Wash Fox</h3>
-              <p className="text-sm text-muted-foreground">
-                FACE WASH FOX – GIẢI PHÁP PHÚC LỢI CHĂM SÓC DA TẠI DOANH NGHIỆP
+              <p className="text-[13px] text-muted-foreground">
+                GIẢI PHÁP CHĂM SÓC TINH TẾ
+                DÀNH CHO DOANH NGHIỆP
               </p>
               <div className="flex space-x-4">{/* Social Media Icons */}</div>
             </div>
@@ -645,7 +671,7 @@ export default function Home() {
 const industries = [
   {
     name: "Ngân sách linh hoạt",
-    description: "gói dịch vụ tùy chỉnh theo quy mô và ngân sách doanh nghiệp, không phát sinh chi phí ngoài.",
+    description: "Gói dịch vụ tùy chỉnh theo quy mô <br /> và ngân sách doanh nghiệp, <br /> không phát sinh chi phí ngoài.",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -669,7 +695,7 @@ const industries = [
   },
   {
     name: "Chuỗi hơn 50 cửa hàng",
-    description: "nhân viên dễ dàng tiếp cận dịch vụ tại bất kỳ chi nhánh nào trên toàn quốc.",
+    description: "Nhân viên dễ dàng tiếp cận dịch vụ <br /> tại bất kỳ chi nhánh nào trên toàn quốc.",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -691,7 +717,7 @@ const industries = [
   },
   {
     name: "Quy trình chuyên nghiệp",
-    description: "đội ngũ được đào tạo bài bản, quy trình chuẩn hóa từ soi da AI đến liệu trình, đồng bộ chất lượng tại mọi điểm.",
+    description: "Đội ngũ được đào tạo bài bản, <br /> quy trình chuẩn hóa từ soi da AI <br /> đến liệu trình, đồng bộ chất lượng tại mọi điểm.",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -712,7 +738,7 @@ const industries = [
   },
   {
     name: "Nâng tầm phúc lợi",
-    description: "phúc lợi skincare độc đáo, tăng employer branding, nhân viên cảm thấy được quan tâm thực sự.",
+    description: "Phúc lợi skincare độc đáo, tăng employer branding, nhân viên cảm thấy được quan tâm thực sự.",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"

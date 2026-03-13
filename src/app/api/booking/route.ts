@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 
 type BookingPayload = {
+  requestType?: "booking" | "quote"
   fullName?: string
   phone?: string
   email?: string
@@ -39,6 +40,7 @@ export async function POST(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        requestType: payload.requestType === "quote" ? "quote" : "booking",
         fullName: payload.fullName.trim(),
         phone: payload.phone.trim(),
         email: payload.email?.trim() ?? "",
