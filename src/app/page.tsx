@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { HeroBackground } from "@/components/Hero"
 import {
   NavigationMenu,
@@ -17,6 +18,14 @@ import {
 } from "@/components/ui/navigation-menu"
 import { branches } from "@/data/branches"
 import "./styles/animation.css"
+
+type CaseStudy = {
+  title: string
+  description: string
+  image: string
+  tags: string[]
+  detailPoints: string[]
+}
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -32,6 +41,7 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState("")
   const [submitSuccess, setSubmitSuccess] = useState("")
+  const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,10 +109,41 @@ export default function Home() {
       return
     }
 
+    const selectedBranch = branches.find((branch) => branch.id === selectedBranchId)
+    if (!selectedBranch) {
+      setSubmitError("Không tìm thấy chi nhánh đã chọn.")
+      return
+    }
+
     setIsSubmitting(true)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800))
-      setSubmitSuccess("Đăng ký thành công. Face Wash Fox sẽ liên hệ bạn sớm.")
+      const response = await fetch("/api/booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: fullName.trim(),
+          phone: phone.trim(),
+          email: email.trim(),
+          note: note.trim(),
+          branchId: selectedBranch.id,
+          branchName: selectedBranch.name,
+          branchAddress: selectedBranch.address,
+          branchCity: selectedBranch.city,
+          branchMapsUrl: selectedBranch.mapsUrl,
+          nearestDistanceKm: nearestBranch?.id === selectedBranch.id ? nearestBranch.distanceKm : null,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("BOOKING_SUBMIT_FAILED")
+      }
+
+      setSubmitSuccess("Đăng ký thành công. Face Wash Fox sẽ liên hệ với bạn trong thời gian sớm nhất!")
+      setFullName("")
+      setPhone("")
+      setEmail("")
       setNote("")
     } catch {
       setSubmitError("Gửi thông tin thất bại. Vui lòng thử lại.")
@@ -169,7 +210,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="text-xl md:text-xl lg:text-4xl font-bold text-white mb-6"
             >
-              FACE WASH FOX – GIẢI PHÁP PHÚC LỢI CHĂM SÓC DA TẠI DOANH NGHIỆP
+              FACE WASH FOX – GIẢI PHÁP CHĂM SÓC TINH TẾ CHO DOANH NGHIỆP
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -189,12 +230,12 @@ export default function Home() {
             >
               <Button asChild size="lg" className="bg-white text-black hover:bg-gray-100">
                 <Link href="#services">
-                  Explore Our Services
+                  Tham Khảo Dịch Vụ
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
-                <Link href="#fox-swat">View Fox Swat</Link>
+                <Link href="#fox-swat">Xem Fox Swat</Link>
               </Button>
             </motion.div>
           </div>
@@ -220,14 +261,15 @@ export default function Home() {
       </section>
 
       {/* Trusted By Section */}
-      <section className="py-5 relative overflow-hidden opacity-70">
+
+      {/* <section className="py-5 relative overflow-hidden opacity-70">
         <div className="container mx-auto">
           <h2 className="text-center text-xl font-medium text-orange-400 mb-12 px-4 ">
             ĐƯỢC CÁC CÔNG TY TIN DÙNG
           </h2>
           <div className="relative w-full overflow-hidden gradient-mask">
             <div className="flex space-x-16 animate-scroll">
-              {/* First set of logos */}
+             
               {[...companies, ...companies].map((company, index) => (
                 <div key={`${company.name}-${index}`} className="flex items-center justify-center min-w-[160px] group">
                   <div className="relative w-32 h-32 opacity-100 transition-all duration-300">
@@ -243,82 +285,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* Services Grid */}
-      <section id="services" className="py-20 bg-gradient-to-b from-[#020817] via-background to-background">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">DỊCH VỤ CỦA CHÚNG TÔI</h2>
-            <p className="text-lg text-muted-foreground">
-              Các giải pháp công nghệ toàn diện được thiết kế riêng để thúc đẩy sự phát triển của doanh nghiệp bạn.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative p-8 rounded-lg bg-card hover:bg-card/80 transition-all border"
-              >
-
-                <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
-                <p className="text-muted-foreground mb-4">{service.description}</p>
-
-                <Button variant="ghost" className="group-hover:translate-x-2 transition-transform">
-                  Learn More
-                  <ArrowUpRight className="w-4 h-4 ml-2" />
-                </Button>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Industries Section */}
-      <section className="py-10 bg-gradient-to-b from-background via-[#020817] to-[#020817] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-02-18%20at%209.40.27%E2%80%AFAM-373LVsiWeCMUoIp1mD84gCtt4nlzTn.png')] opacity-5 bg-cover bg-center" />
-        <div className="container mx-auto px-4 relative z-10">
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {industries.map((industry, index) => (
-              <motion.div
-                key={industry.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative"
-              >
-                <div className="relative p-8 rounded-2xl bg-[#0a101f]/40 border border-gray-800/50 backdrop-blur-sm hover:bg-[#0a101f]/60 transition-all duration-300">
-                  <div className="mb-6 relative">
-                    <div className="w-16 h-16 rounded-full bg-[#1a1f2e] flex items-center justify-center relative group-hover:scale-110 transition-transform duration-300">
-                      <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl group-hover:bg-primary/30 transition-all duration-300" />
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="relative z-10 text-primary [&_svg]:w-8 [&_svg]:h-8">
-                        <industry.icon />
-                      </div>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-primary transition-colors duration-300">
-                    {industry.name}
-                  </h3>
-                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-                    {industry.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Case Studies */}
       <section id="fox-swat" className="py-20 bg-gradient-to-b from-[#020817] via-background to-background">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">FOX SWAT</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">DỊCH VỤ CUNG CẤP</h2>
+            <p className="text-xl md:text-xl font-bold mb-4">Hai Giải Pháp Chăm Sóc Da Linh Hoạt Cho Doanh Nghiệp</p>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             {caseStudies.map((study, index) => (
@@ -350,9 +323,17 @@ export default function Home() {
                       <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
                         {study.title}
                       </h3>
-                      <p className="text-muted-foreground mb-4">{study.description}</p>
-                      <Button variant="ghost" className="group-hover:translate-x-2 transition-transform">
-                        Read Case Study
+                      <p
+                        className="text-muted-foreground mb-4"
+                        dangerouslySetInnerHTML={{ __html: study.description }}
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        className="group-hover:translate-x-2 transition-transform"
+                        onClick={() => setSelectedStudy(study)}
+                      >
+                        Chi tiết
                         <ArrowUpRight className="w-4 h-4 ml-2" />
                       </Button>
                     </div>
@@ -362,7 +343,71 @@ export default function Home() {
             ))}
           </div>
         </div>
+        <Dialog open={Boolean(selectedStudy)} onOpenChange={(open) => !open && setSelectedStudy(null)}>
+          <DialogContent className="border-white/10 bg-[#020817] text-white sm:max-w-2xl">
+            {selectedStudy ? (
+              <div className="space-y-6">
+                <DialogHeader className="space-y-3">
+                  <DialogTitle className="text-2xl leading-tight">{selectedStudy.title}</DialogTitle>
+                  <div
+                    className="text-sm leading-6 text-gray-300"
+                    dangerouslySetInnerHTML={{ __html: selectedStudy.description }}
+                  />
+                </DialogHeader>
+
+                <ul className="space-y-3 text-base leading-7 text-gray-200">
+                  {selectedStudy.detailPoints.map((point) => (
+                    <li key={point} className="flex gap-3">
+                      <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </DialogContent>
+        </Dialog>
       </section>
+
+      {/* Services Grid */}
+      <section id="services" className="py-20 bg-gradient-to-b from-[#020817] via-background to-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">TẠI SAO CHỌN FACE WASH FOX?</h2>
+
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {industries.map((industry, index) => (
+              <motion.div
+                key={industry.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group relative"
+              >
+                <div className="relative p-8 rounded-2xl bg-[#0a101f]/40 border border-gray-800/50 backdrop-blur-sm hover:bg-[#0a101f]/60 transition-all duration-300">
+                  <div className="mb-6 relative">
+                    <div className="w-16 h-16 rounded-full bg-[#1a1f2e] flex items-center justify-center relative group-hover:scale-110 transition-transform duration-300">
+                      <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl group-hover:bg-primary/30 transition-all duration-300" />
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="relative z-10 text-primary [&_svg]:w-8 [&_svg]:h-8">
+                        <industry.icon />
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-primary transition-colors duration-300">
+                    {industry.name}
+                  </h3>
+                  <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+                    {industry.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       {/* CTA Section */}
       <section id="booking" className="py-20 bg-gradient-to-b from-[#020817] via-background to-background">
@@ -468,9 +513,6 @@ export default function Home() {
               {submitError ? (
                 <p className="text-[0.95rem] text-[#dc2626]">{submitError}</p>
               ) : null}
-              {submitSuccess ? (
-                <p className="text-[0.95rem] text-[#0f766e]">{submitSuccess}</p>
-              ) : null}
 
               <button
                 type="submit"
@@ -484,12 +526,27 @@ export default function Home() {
             </form>
           </div>
         </div>
+        <Dialog open={Boolean(submitSuccess)} onOpenChange={(open) => !open && setSubmitSuccess("")}>
+          <DialogContent className="border-white/10 bg-[#020817] text-white sm:max-w-md">
+            <DialogHeader className="space-y-3 text-center">
+              <DialogTitle className="text-2xl">Đăng ký thành công</DialogTitle>
+            </DialogHeader>
+            <p className="text-center text-base leading-7 text-gray-300">{submitSuccess}</p>
+            <Button
+              type="button"
+              className="w-full bg-gradient-to-r from-[#f04b9a] to-[#7c3aed] text-white hover:opacity-90"
+              onClick={() => setSubmitSuccess("")}
+            >
+              Đóng
+            </Button>
+          </DialogContent>
+        </Dialog>
       </section>
 
       {/* Footer */}
       <footer className="bg-background border-t">
         <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold">Face Wash Fox</h3>
               <p className="text-sm text-muted-foreground">
@@ -497,52 +554,28 @@ export default function Home() {
               </p>
               <div className="flex space-x-4">{/* Social Media Icons */}</div>
             </div>
+
             <div>
-              <h4 className="font-semibold mb-4">Services</h4>
+              <h4 className="font-semibold mb-4">Công ty</h4>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-                    AI Solutions
+                  <Link href="https://facewashfox.com/ve-chung-toi/" className="text-sm text-muted-foreground hover:text-primary">
+                    Về chúng tôi
                   </Link>
                 </li>
                 <li>
-                  <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-                    Custom Software
+                  <Link href="https://menu.facewashfox.com/˝" className="text-sm text-muted-foreground hover:text-primary">
+                    Dịch vụ
                   </Link>
                 </li>
                 <li>
-                  <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-                    Cloud Solutions
+                  <Link href="https://facewashfox.com/tin-tuc/" className="text-sm text-muted-foreground hover:text-primary">
+                    Tin tức
                   </Link>
                 </li>
                 <li>
-                  <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-                    Cybersecurity
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-                    Case Studies
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/" className="text-sm text-muted-foreground hover:text-primary">
-                    Careers
+                  <Link href="https://cuahang.facewashfox.com/" className="text-sm text-muted-foreground hover:text-primary">
+                    Cửa hàng
                   </Link>
                 </li>
               </ul>
@@ -609,121 +642,125 @@ export default function Home() {
   )
 }
 
-const companies = [
-  { name: "Danh Giá", logo: "/logo-company/danh-gia-logo.png" },
-  { name: "Phương Phát", logo: "/logo-company/PPLogo.png" },
-  { name: "Danh Giá", logo: "/logo-company/danh-gia-logo.png" },
-  { name: "Phương Phát", logo: "/logo-company/PPLogo.png" },
-  { name: "Danh Giá", logo: "/logo-company/danh-gia-logo.png" },
-  { name: "Phương Phát", logo: "/logo-company/PPLogo.png" },
-]
-
-const services = [
-  {
-    title: "Triển khai tận nơi",
-    description: "Facewashfox mang dịch vụ soi da và tư vấn chăm sóc da trực tiếp đến văn phòng, linh hoạt theo lịch làm việc của doanh nghiệp.",
-
-
-  },
-  {
-    title: "Quy trình chuyên nghiệp",
-    description: "Đội ngũ chuyên viên được đào tạo bài bản, quy trình rõ ràng từ check-in, soi da đến tư vấn cá nhân hóa, đảm bảo trải nghiệm đồng bộ và chất lượng.",
-  },
-  {
-    title: "Tối ưu chi phí",
-    description: "Chi phí hợp lý theo số lượng nhân viên, không phát sinh ngoài dự kiến. Chỉ cần một ngân sách nhỏ nhưng tạo giá trị lâu dài.",
-
-  },
-
-
-]
-
 const industries = [
   {
-    name: "Công nghệ hiện đại",
-    description: "Ứng dụng công nghệ soi da thông minh giúp phân tích chính xác tình trạng da, đưa ra giải pháp phù hợp cho từng nhân viên.",
+    name: "Ngân sách linh hoạt",
+    description: "gói dịch vụ tùy chỉnh theo quy mô và ngân sách doanh nghiệp, không phát sinh chi phí ngoài.",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="w-6 h-6"
+        className="lucide lucide-hand-coins-icon lucide-hand-coins"
       >
-        <path d="M2 17a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V8.32a5 5 0 0 0-2.64-4.4L12 0 4.64 3.92A5 5 0 0 0 2 8.32Z" />
-        <path d="m6 12 6-3 6 3" />
-        <path d="M12 9v8" />
+        <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
+        <path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+        <path d="m2 16 6 6" />
+        <circle cx="16" cy="9" r="2.9" />
+        <circle cx="6" cy="5" r="3" />
       </svg>
     ),
   },
   {
-    name: "Dễ dàng tổ chức",
-    description: "Facewashfox phụ trách toàn bộ khâu chuẩn bị, vận chuyển, lắp đặt và vận hành. Doanh nghiệp không cần thêm nguồn lực nội bộ.",
+    name: "Chuỗi hơn 50 cửa hàng",
+    description: "nhân viên dễ dàng tiếp cận dịch vụ tại bất kỳ chi nhánh nào trên toàn quốc.",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="w-6 h-6"
+        className="lucide lucide-store-icon lucide-store"
       >
-        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+        <path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5" />
+        <path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244" />
+        <path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05" />
+      </svg>
+    ),
+  },
+  {
+    name: "Quy trình chuyên nghiệp",
+    description: "đội ngũ được đào tạo bài bản, quy trình chuẩn hóa từ soi da AI đến liệu trình, đồng bộ chất lượng tại mọi điểm.",
+    icon: () => (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="lucide lucide-check-check-icon lucide-check-check"
+      >
+        <path d="M18 6 7 17l-5-5" />
+        <path d="m22 10-7.5 7.5L13 16" />
       </svg>
     ),
   },
   {
     name: "Nâng tầm phúc lợi",
-    description: "Building seamless shopping experiences with scalable platforms and smart inventory systems",
+    description: "phúc lợi skincare độc đáo, tăng employer branding, nhân viên cảm thấy được quan tâm thực sự.",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="w-6 h-6"
+        className="lucide lucide-gem-icon lucide-gem"
       >
-        <circle cx="8" cy="21" r="1" />
-        <circle cx="19" cy="21" r="1" />
-        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+        <path d="M10.5 3 8 9l4 13 4-13-2.5-6" />
+        <path d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z" />
+        <path d="M2 9h20" />
       </svg>
     ),
   },
 ]
 
-const caseStudies = [
+const caseStudies: CaseStudy[] = [
   {
-    title: "Biệt đội chăm sóc da tận nơi",
+    title: "Gói chăm sóc ngay tại văn phòng",
     description:
-      "Facewashfox mang nơi soi da và tư vấn chăm sóc da đến trực tiếp doanh nghiệp, thiết lập một góc thư giãn ngay tại văn phòng.",
-    image:
-      "/Fox Swat/fx1.JPG",
-    tags: ["Tiện lợi, không gián đoạn công việc", "Chuyên nghiệp, cá nhân hóa"],
-  },
-  {
-    title: "Gói chăm sóc linh hoạt",
-    description:
-      "Linh hoạt ngân sách theo quy mô và mục tiêu doanh nghiệp .Giữ trọn quyền lợi đầy đủ dịch vụ và chuyên nghiệp. Doanh nghiệp lựa chọn gói dịch vụ, nhân viên chủ động trải nghiệm tại Facewashfox theo lịch trình riêng",
+      "Face Wash Fox mang đội ngũ chuyên viên, thiết bị soi da AI và đầy đủ công cụ chăm sóc da đến trực tiếp doanh nghiệp.",
     image:
       "/Fox Swat/fx3.JPG",
-    tags: ["Linh hoạt ngân sách", "Giữ trọn quyền lợi"],
+    tags: ["Tiện lợi, không gián đoạn công việc", "Chuyên nghiệp, cá nhân hóa"],
+    detailPoints: [
+      "Nhân viên trải nghiệm soi da, chăm sóc da nhanh, mini game và lucky draw ngay tại văn phòng.",
+      "FWF lo toàn bộ vận hành, doanh nghiệp không cần chuẩn bị.",
+      "Phù hợp cho Brand Day, sự kiện nội bộ, team building.",
+    ],
   },
 
   {
-    title: "Thẻ quà tặng cho nhân viên",
+    title: "Card Voucher – Thẻ quà tặng chăm sóc da",
     description:
-      "Doanh nghiệp mua thẻ quà tặng Facewashfox dành tặng nhân viên như một hình thức phúc lợi linh hoạt và tinh tế. Nhân viên chủ động sử dụng dịch vụ chăm sóc da tại Facewashfox theo nhu cầu và thời gian cá nhân.",
+      'Doanh nghiệp mua <b>thẻ quà tặng Face Wash Fox</b> dành tặng nhân viên như một hình thức phúc lợi linh hoạt và tinh tế.',
     image:
       "/Fox Swat/fx3.png",
     tags: ["Thẻ quà tặng Face Wash Fox", "Chủ động sử dụng"],
+    detailPoints: [
+      "Thẻ vật lý hoặc điện tử, nhân viên dễ dàng sử dụng.",
+      "Chủ động đặt lịch và trải nghiệm tại hơn 50 cửa hàng Face Wash Fox trên toàn quốc.",
+      "Linh hoạt thời gian, phù hợp làm quà tặng dịp lễ, ghi nhận hiệu suất hoặc tặng định kỳ cho đội ngũ.",
+    ],
   },
 ]
 
