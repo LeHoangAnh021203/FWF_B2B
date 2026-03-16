@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ArrowRight, ArrowUpRight, ChevronDown, Facebook, Instagram, MessageCircle, Youtube } from "lucide-react"
+import { ArrowRight, ArrowUpRight, ChevronDown, Facebook, GamepadDirectional, Instagram, MessageCircle, Youtube } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -9,7 +9,6 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { HeroBackground } from "@/components/Hero"
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -201,7 +200,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="min-h-screen relative overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white">
-       
+
         <motion.div className="container mx-auto px-4 pt-32 pb-16 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <motion.h1
@@ -300,37 +299,48 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
                 className="group cursor-pointer"
               >
-                <Card>
-                  <CardContent className="p-5 bg-white text-orange-500">
-                    <div className="relative h-64 mb-6 rounded-t-lg overflow-hidden bg-orange-50">
-                      <Image
-                        src={study.image || "/placeholder.svg"}
-                        alt={study.title}
-                        fill
-                        className="object-contain"
-                      />
+                <Card className="relative overflow-hidden rounded-[32px] border border-orange-200/70 bg-white/95 shadow-[0_20px_60px_-24px_rgba(234,88,12,0.35)] transition-all duration-500 group-hover:border-orange-300 group-hover:shadow-[0_28px_80px_-28px_rgba(234,88,12,0.45)]">
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.18),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(254,215,170,0.28),transparent_30%)] opacity-80" />
+                  <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent opacity-70" />
+                  <CardContent className="relative p-5 text-orange-500 md:p-6">
+                    <div className="relative mb-7 overflow-hidden rounded-[28px] border border-orange-100 bg-gradient-to-br from-orange-50 via-amber-50 to-white p-4 shadow-inner">
+                      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(251,146,60,0.12),transparent_28%)]" />
+                      <div className="pointer-events-none absolute right-4 top-4 h-14 w-14 rounded-full bg-orange-200/30 blur-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-orange-300/40" />
+
+                      <div className="relative h-64 overflow-hidden rounded-[24px]">
+                        <Image
+                          src={study.image || "/placeholder.svg"}
+                          alt={study.title}
+                          fill
+                          className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
+                        />
+                      </div>
                     </div>
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 mb-3">
+                    <div className="px-2 pb-2 md:px-3">
+                      <div className="mb-4 flex flex-wrap gap-2">
                         {study.tags.map((tag) => (
-                          <span key={tag} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                          <span
+                            key={tag}
+                            className="rounded-full border border-orange-300/80 bg-white/90 px-4 py-2 text-sm font-medium text-orange-600 shadow-sm transition-all duration-300 group-hover:border-orange-400 group-hover:bg-orange-50"
+                          >
                             {tag}
                           </span>
                         ))}
                       </div>
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                      <h3 className="mb-3 text-2xl font-semibold leading-tight text-orange-600 transition-colors duration-300 group-hover:text-orange-500">
                         {study.title}
                       </h3>
                       <p
-                        className="text-muted-foreground mb-4"
+                        className="mb-6 max-w-2xl text-lg leading-8 text-stone-500"
                         dangerouslySetInnerHTML={{ __html: study.description }}
                       />
                       <Button
                         type="button"
                         variant="ghost"
-                        className="group-hover:translate-x-2 transition-transform"
+                        className="h-auto rounded-full border border-orange-200 bg-orange-50 px-5 py-3 text-base font-medium text-orange-600 transition-all duration-300 hover:border-orange-300 hover:bg-orange-100 hover:text-orange-700 group-hover:translate-x-1"
                         onClick={() => setSelectedStudy(study)}
                       >
                         Chi tiết
@@ -358,7 +368,7 @@ export default function Home() {
                 <ul className="space-y-3 text-base leading-7 text-stone-700">
                   {selectedStudy.detailPoints.map((point) => (
                     <li key={point} className="flex gap-3">
-                      <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" />
+                      <GamepadDirectional className="mt-1 h-5 w-5 shrink-0 text-orange-500" />
                       <span>{point}</span>
                     </li>
                   ))}
@@ -373,7 +383,7 @@ export default function Home() {
       <section id="services" className="py-20 bg-gradient-to-b from-white via-orange-50 to-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">TẠI SAO CHỌN FOX SWAT?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">TẠI SAO NÊN CHỌN FOX SWAT?</h2>
 
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -751,32 +761,46 @@ const industries = [
 
 const caseStudies: CaseStudy[] = [
   {
-    title: "Gói chăm sóc ngay tại văn phòng",
+    title: "Gói linh hoạt, cá nhân hóa tối đa",
     description:
-      "Face Wash Fox mang đội ngũ chuyên viên, thiết bị soi da AI và đầy đủ công cụ chăm sóc da đến trực tiếp doanh nghiệp.",
+      "Cash Voucher là giải pháp quà tặng đơn giản và linh hoạt nhất dành cho doanh nghiệp muốn tri ân nhân viên",
     image:
-      "/Fox Swat/fx3.JPG",
-    tags: ["Tiện lợi, không gián đoạn công việc", "Chuyên nghiệp, cá nhân hóa"],
+      "/Fox Swat/fx3.png",
+    tags: ["Cá nhân hóa 100%", "Không giới hạn loại dịch vụ", "Dễ dàng sử dụng"],
     detailPoints: [
-      "Nhân viên trải nghiệm soi da, chăm sóc da nhanh, mini game và lucky draw ngay tại văn phòng.",
-      "FWF lo toàn bộ vận hành, doanh nghiệp không cần chuẩn bị.",
-      "Phù hợp cho Brand Day, sự kiện nội bộ, team building.",
+      "Mệnh giá đa dạng: 50.000 VNĐ – 100.000 VNĐ – 200.000 VNĐ – 500.000 VNĐ (có thể tùy chỉnh theo nhu cầu doanh nghiệp).",
+      "Cách sử dụng: Nhân viên nhận voucher như một khoản tiền mặt kỹ thuật số hoặc vật lý, mang đến bất kỳ cửa hàng Face Wash Fox nào trên toàn quốc để trừ trực tiếp vào chi phí dịch vụ chăm sóc da",
     ],
   },
 
   {
-    title: "Card Voucher – Thẻ quà tặng chăm sóc da",
+    title: "Gói liệu trình chuyên gia",
     description:
-      'Doanh nghiệp mua <b>thẻ quà tặng Face Wash Fox</b> dành tặng nhân viên như một hình thức phúc lợi linh hoạt và tinh tế.',
+      'Card Voucher là gói quà tặng cao cấp với mệnh giá cố định, tương ứng trực tiếp một liệu trình chuyên sâu tại Face Wash Fox, mang đến trải nghiệm chuẩn spa ngay lập tức.',
     image:
-      "/Fox Swat/fx3.png",
-    tags: ["Thẻ quà tặng Face Wash Fox", "Chủ động sử dụng"],
+      "/Fox Swat/1.png",
+    tags: ["Trải nghiệm chăm sóc da chuẩn chuyên gia", "Tạo cảm giác được chăm sóc thực sự", "Dễ dàng sử dụng"],
     detailPoints: [
-      "Thẻ vật lý hoặc điện tử, nhân viên dễ dàng sử dụng.",
-      "Chủ động đặt lịch và trải nghiệm tại hơn 50 cửa hàng Face Wash Fox trên toàn quốc.",
-      "Linh hoạt thời gian, phù hợp làm quà tặng dịp lễ, ghi nhận hiệu suất hoặc tặng định kỳ cho đội ngũ.",
+      "Doanh nghiệp chọn sẵn các liệu trình khuyên dùng từ nhà Cáo để làm quà tặng chăm sóc cho nhân viên",
+      "Nhân viên mang card đến bất kỳ cửa hàng nào trong hệ thống để sử dụng đầy đủ quy trình: soi da, tư vấn và thực hiện liệu trình chuyên nghiệp.",
     ],
   },
+
+  {
+    title: "Gói chăm sóc ngay tại văn phòng",
+    description:
+      'Fox SWAT mang toàn bộ spa công nghệ cao của Face Wash Fox đến ngay tại doanh nghiệp, setup booth chuyên nghiệp để nhân viên thư giãn và chăm sóc da mà không cần di chuyển',
+    image:
+      "/Fox Swat/fx3.JPG",
+    tags: ["Tạo điểm nhấn cho văn hóa doanh nghiệp", "Trải nghiệm thư giãn ngay trong giờ làm việc"],
+    detailPoints: [
+      "Đội ngũ chuyên gia cùng thiết bị hiện đại (máy soi da AI, các đầu máy rửa mặt) đến tận văn phòng.",
+      "Phù hợp cho Brand Day, sự kiện nội bộ, team building",
+      "Linh hoạt chăm sóc ngắn hạn, biến một ngày làm việc thành ngày trải nghiệm đáng nhớ và gắn kết đội nhóm",
+    ],
+  },
+
+
 ]
 
 function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number) {
