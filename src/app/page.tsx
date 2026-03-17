@@ -212,13 +212,21 @@ export default function Home() {
 
         <motion.div className="container mx-auto px-4 pt-32 pb-16 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-16">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="mb-4 text-sm font-bold uppercase  text-orange-300 md:text-base"
+            >
+              Giới thiệu
+            </motion.p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="text-xl md:text-xl lg:text-4xl font-bold text-orange-500 mb-6"
             >
-              FACE WASH FOX – GIẢI PHÁP ĐỒNG HÀNH CÙNG CHĂM SÓC NHÂN VIÊN DÀNH CHO DOANH NGHIỆP
+              FACE WASH FOX – GIẢI PHÁP ĐỒNG HÀNH <br /> CÙNG CHĂM SÓC NHÂN VIÊN DÀNH CHO DOANH NGHIỆP
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -298,8 +306,8 @@ export default function Home() {
       <section id="fox-swat" className="py-20 bg-gradient-to-b from-orange-100 via-white to-orange-50">
         <div className="w-full px-4 md:px-8 xl:px-12 2xl:px-16">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-xl md:text-xl font-bold mb-4 text-orange-400 w-full">KHÁM PHÁ</h2>
-            <p className="text-3xl md:text-3xl font-bold mb-4 text-blue-400">3 GÓI DỊCH VỤ</p>
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-orange-300 w-full">KHÁM PHÁ</h2>
+            <p className="text-3xl md:text-4xl font-bold mb-4 text-black">3 GÓI DỊCH VỤ</p>
           </div>
           <div className="grid gap-8">
             {caseStudies.map((study, index) => (
@@ -333,7 +341,14 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="px-2 pb-2 md:px-3">
-                      <div className="mb-4 flex flex-wrap gap-2">
+                      <h3 className="mb-3 text-2xl font-semibold leading-tight text-orange-600 transition-colors duration-300 group-hover:text-orange-500">
+                        {study.title}
+                      </h3>
+                      <p
+                        className="mb-5 max-w-2xl text-lg leading-8 text-stone-500"
+                        dangerouslySetInnerHTML={{ __html: study.description }}
+                      />
+                      <div className="mb-6 flex flex-wrap gap-2">
                         {study.tags.map((tag) => (
                           <span
                             key={tag}
@@ -343,13 +358,6 @@ export default function Home() {
                           </span>
                         ))}
                       </div>
-                      <h3 className="mb-3 text-2xl font-semibold leading-tight text-orange-600 transition-colors duration-300 group-hover:text-orange-500">
-                        {study.title}
-                      </h3>
-                      <p
-                        className="mb-6 max-w-2xl text-lg leading-8 text-stone-500"
-                        dangerouslySetInnerHTML={{ __html: study.description }}
-                      />
                       <Button
                         type="button"
                         variant="ghost"
@@ -396,7 +404,7 @@ export default function Home() {
       <section id="services" className="py-20 bg-gradient-to-b from-white via-orange-50 to-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-orange-500">Điều khiến Face wash fox trở thành lựa chọn của nhiều doanh nghiệp</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-orange-500">Điều khiến Face Wash Fox trở thành <br /> lựa chọn của nhiều doanh nghiệp</h2>
 
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -701,13 +709,13 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Nhắn tin"
-          className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-orange-500 text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
+          className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
         >
           <Image
             src="https://i.pinimg.com/736x/1c/e6/41/1ce64129a8c06a58fb2bbc79e70d5e0d.jpg"
             alt="Nhắn tin"
-            width={30}
-            height={30}
+            width={50}
+            height={50}
             className="rounded-full object-cover"
           />
         </Link>
