@@ -19,6 +19,10 @@ import { branches } from "@/data/branches"
 import "./styles/animation.css"
 
 type CaseStudy = {
+  eyebrow: string
+  eyebrowClassName: string
+  iconClassName: string
+  dialogBorderClassName: string
   title: string
   description: string
   image: string
@@ -41,6 +45,7 @@ export default function Home() {
   const [submitError, setSubmitError] = useState("")
   const [submitSuccess, setSubmitSuccess] = useState("")
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null)
+  const [openFaqIndex, setOpenFaqIndex] = useState(0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -230,7 +235,7 @@ export default function Home() {
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
               <Button asChild size="lg" className="bg-orange-500 text-white hover:bg-orange-600">
-                <Link href="#services">
+                <Link href="#fox-swat">
                   Tham Khảo Dịch Vụ
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -302,14 +307,18 @@ export default function Home() {
                 whileHover={{ y: -10 }}
                 className="group cursor-pointer"
               >
-                <Card className="relative overflow-hidden rounded-[32px] border border-orange-200/70 bg-white/95 shadow-[0_20px_60px_-24px_rgba(234,88,12,0.35)] transition-all duration-500 group-hover:border-orange-300 group-hover:shadow-[0_28px_80px_-28px_rgba(234,88,12,0.45)]">
+                <Card className="relative overflow-visible  border border-orange-200/70 bg-white/95 shadow-[0_20px_60px_-24px_rgba(234,88,12,0.35)] transition-all duration-500 group-hover:border-orange-300 group-hover:shadow-[0_28px_80px_-28px_rgba(234,88,12,0.45)]">
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.18),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(254,215,170,0.28),transparent_30%)] opacity-80" />
                   <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent opacity-70" />
-                  <CardContent className="relative p-5 text-orange-500 md:p-6">
+                  <CardContent className="relative p-5 pt-8 text-orange-500 md:p-6 md:pt-9">
+                    <div
+                      className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border bg-white px-4 py-1.5 text-xl font-extrabold uppercase tracking-[0.24em] shadow-[0_12px_30px_-18px_rgba(15,23,42,0.28)] ${study.eyebrowClassName}`}
+                    >
+                      {study.eyebrow}
+                    </div>
                     <div className="relative mb-7 overflow-hidden rounded-[28px] border border-orange-100 bg-gradient-to-br from-orange-50 via-amber-50 to-white p-4 shadow-inner">
                       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(251,146,60,0.12),transparent_28%)]" />
                       <div className="pointer-events-none absolute right-4 top-4 h-14 w-14 rounded-full bg-orange-200/30 blur-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-orange-300/40" />
-
                       <div className="relative h-64 overflow-hidden rounded-[24px]">
                         <Image
                           src={study.image || "/placeholder.svg"}
@@ -354,7 +363,7 @@ export default function Home() {
           </div>
         </div>
         <Dialog open={Boolean(selectedStudy)} onOpenChange={(open) => !open && setSelectedStudy(null)}>
-          <DialogContent className="border-orange-200 bg-white text-orange-950 sm:max-w-2xl">
+          <DialogContent className={`bg-white text-orange-950 sm:max-w-2xl border-5 ${selectedStudy?.dialogBorderClassName ?? "border-orange-200"}`}>
             {selectedStudy ? (
               <div className="space-y-6">
                 <DialogHeader className="space-y-3">
@@ -368,7 +377,7 @@ export default function Home() {
                 <ul className="space-y-3 text-base leading-7 text-stone-700">
                   {selectedStudy.detailPoints.map((point) => (
                     <li key={point} className="flex gap-3">
-                      <GamepadDirectional className="mt-1 h-5 w-5 shrink-0 text-orange-500" />
+                      <GamepadDirectional className={`mt-1 h-5 w-5 shrink-0 ${selectedStudy.iconClassName}`} />
                       <span>{point}</span>
                     </li>
                   ))}
@@ -383,7 +392,7 @@ export default function Home() {
       <section id="services" className="py-20 bg-gradient-to-b from-white via-orange-50 to-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black">TẠI SAO NÊN CHỌN FOX SWAT?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-orange-500">Điều khiến Face wash fox trở thành lựa chọn của nhiều doanh nghiệp</h2>
 
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -415,6 +424,60 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="relative overflow-hidden bg-gradient-to-b from-white via-orange-50/60 to-white py-20">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.18),transparent_55%)]" />
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto mb-14 max-w-3xl text-center">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-orange-400">Câu Hỏi Thường Gặp</p>
+            <h2 className="text-3xl font-bold text-orange-500 md:text-5xl">Dịch vụ Face Wash Fox</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-stone-500 md:text-lg">
+              Những điều doanh nghiệp thường hỏi trước khi triển khai voucher, gift card hoặc booth trải nghiệm tại văn phòng.
+            </p>
+          </div>
+
+          <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-2">
+            {faqItems.map((item, index) => {
+              const isOpen = openFaqIndex === index
+
+              return (
+                <motion.div
+                  key={item.question}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: index * 0.06 }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
+                    className={`w-full rounded-[28px] border bg-white/95 p-6 text-left shadow-[0_18px_50px_-30px_rgba(234,88,12,0.35)] transition-all duration-300 ${isOpen ? "border-orange-300 shadow-[0_24px_60px_-30px_rgba(234,88,12,0.42)]" : "border-orange-100 hover:-translate-y-1 hover:border-orange-200"}`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors ${isOpen ? "border-orange-300 bg-orange-100 text-orange-600" : "border-orange-200 bg-orange-50 text-orange-500"}`}>
+                        {index + 1}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between gap-4">
+                          <h3 className="text-xl font-semibold leading-tight text-stone-900">
+                            {item.question}
+                          </h3>
+                          <ChevronDown className={`mt-1 h-5 w-5 shrink-0 text-orange-500 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+                        </div>
+                        <div className={`grid transition-all duration-300 ${isOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+                          <div className="overflow-hidden">
+                            <p className="pr-8 text-base leading-8 text-stone-600">{item.answer}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -693,8 +756,8 @@ const industries = [
     ),
   },
   {
-    name: "Chuỗi hơn 50 cửa hàng",
-    description: "Nhân viên dễ dàng tiếp cận dịch vụ <br /> tại bất kỳ chi nhánh nào trên toàn quốc.",
+    name: "Trải nghiệm chăm sóc khác biệt",
+    description: "Mang đến trải nghiệm chăm sóc da thiết thực, giúp nhân viên cảm thấy được quan tâm và nâng cao hình ảnh doanh nghiệp.",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -715,8 +778,8 @@ const industries = [
     ),
   },
   {
-    name: "Quy trình chuyên nghiệp",
-    description: "Đội ngũ được đào tạo bài bản, <br /> quy trình chuẩn hóa từ soi da AI <br /> đến liệu trình, đồng bộ chất lượng tại mọi điểm.",
+    name: "Linh hoạt sử dụng",
+    description: "Nhân viên có thể dễ dàng sử dụng dịch vụ tại hơn 50 cửa hàng Facewashfox trên toàn quốc",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -736,8 +799,8 @@ const industries = [
     ),
   },
   {
-    name: "Nâng tầm phúc lợi",
-    description: "Phúc lợi skincare độc đáo, tăng employer branding, nhân viên cảm thấy được quan tâm thực sự.",
+    name: "Quy trình chuyên nghiệp",
+    description: "Đội ngũ chuyên viên được đào tạo bài bản, quy trình chuẩn hóa từ soi da AI đến liệu trình chăm sóc, đảm bảo chất lượng đồng bộ",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -760,33 +823,12 @@ const industries = [
 ]
 
 const caseStudies: CaseStudy[] = [
-  {
-    title: "Gói linh hoạt, cá nhân hóa tối đa",
-    description:
-      "Cash Voucher là giải pháp quà tặng đơn giản và linh hoạt nhất dành cho doanh nghiệp muốn tri ân nhân viên",
-    image:
-      "/Fox Swat/fx3.png",
-    tags: ["Cá nhân hóa 100%", "Không giới hạn loại dịch vụ", "Dễ dàng sử dụng"],
-    detailPoints: [
-      "Mệnh giá đa dạng: 50.000 VNĐ – 100.000 VNĐ – 200.000 VNĐ – 500.000 VNĐ (có thể tùy chỉnh theo nhu cầu doanh nghiệp).",
-      "Cách sử dụng: Nhân viên nhận voucher như một khoản tiền mặt kỹ thuật số hoặc vật lý, mang đến bất kỳ cửa hàng Face Wash Fox nào trên toàn quốc để trừ trực tiếp vào chi phí dịch vụ chăm sóc da",
-    ],
-  },
 
   {
-    title: "Gói liệu trình chuyên gia",
-    description:
-      'Card Voucher là gói quà tặng cao cấp với mệnh giá cố định, tương ứng trực tiếp một liệu trình chuyên sâu tại Face Wash Fox, mang đến trải nghiệm chuẩn spa ngay lập tức.',
-    image:
-      "/Fox Swat/1.png",
-    tags: ["Trải nghiệm chăm sóc da chuẩn chuyên gia", "Tạo cảm giác được chăm sóc thực sự", "Dễ dàng sử dụng"],
-    detailPoints: [
-      "Doanh nghiệp chọn sẵn các liệu trình khuyên dùng từ nhà Cáo để làm quà tặng chăm sóc cho nhân viên",
-      "Nhân viên mang card đến bất kỳ cửa hàng nào trong hệ thống để sử dụng đầy đủ quy trình: soi da, tư vấn và thực hiện liệu trình chuyên nghiệp.",
-    ],
-  },
-
-  {
+    eyebrow: "FOX SWAT",
+    eyebrowClassName: "border-orange-300 text-orange-500",
+    iconClassName: "text-orange-500",
+    dialogBorderClassName: "border-orange-300",
     title: "Gói chăm sóc ngay tại văn phòng",
     description:
       'Fox SWAT mang toàn bộ spa công nghệ cao của Face Wash Fox đến ngay tại doanh nghiệp, setup booth chuyên nghiệp để nhân viên thư giãn và chăm sóc da mà không cần di chuyển',
@@ -800,7 +842,68 @@ const caseStudies: CaseStudy[] = [
     ],
   },
 
+  {
+    eyebrow: "FOX GIFT CARD",
+    eyebrowClassName: "border-sky-300 text-sky-500",
+    iconClassName: "text-sky-500",
+    dialogBorderClassName: "border-sky-300",
+    title: "Gói liệu trình chuyên gia",
+    description:
+      'Card Voucher là gói quà tặng cao cấp với mệnh giá cố định, tương ứng trực tiếp một liệu trình chuyên sâu tại Face Wash Fox, mang đến trải nghiệm chuẩn spa ngay lập tức.',
+    image:
+      "/Fox Swat/1.png",
+    tags: ["Trải nghiệm chăm sóc da chuẩn chuyên gia", "Tạo cảm giác được chăm sóc thực sự", "Dễ dàng sử dụng"],
+    detailPoints: [
+      "Doanh nghiệp chọn sẵn các liệu trình khuyên dùng từ nhà Cáo để làm quà tặng chăm sóc cho nhân viên",
+      "Nhân viên mang card đến bất kỳ cửa hàng nào trong hệ thống để sử dụng đầy đủ quy trình: soi da, tư vấn và thực hiện liệu trình chuyên nghiệp.",
+    ],
+  },
 
+  {
+    eyebrow: "FOX CASH",
+    eyebrowClassName: "border-lime-300 text-lime-500",
+    iconClassName: "text-lime-500",
+    dialogBorderClassName: "border-lime-300",
+    title: "Gói linh hoạt, cá nhân hóa tối đa",
+    description:
+      "Cash Voucher là giải pháp quà tặng đơn giản và linh hoạt nhất dành cho doanh nghiệp muốn tri ân nhân viên",
+    image:
+      "/Fox Swat/fx3.png",
+    tags: ["Cá nhân hóa 100%", "Không giới hạn loại dịch vụ", "Dễ dàng sử dụng"],
+    detailPoints: [
+      "Mệnh giá đa dạng: 50.000 VNĐ – 100.000 VNĐ – 200.000 VNĐ – 500.000 VNĐ (có thể tùy chỉnh theo nhu cầu doanh nghiệp).",
+      "Cách sử dụng: Nhân viên nhận voucher như một khoản tiền mặt kỹ thuật số hoặc vật lý, mang đến bất kỳ cửa hàng Face Wash Fox nào trên toàn quốc để trừ trực tiếp vào chi phí dịch vụ chăm sóc da",
+    ],
+  },
+
+]
+
+const faqItems = [
+  {
+    question: "Doanh nghiệp có thể triển khai dịch vụ cho bao nhiêu nhân viên?",
+    answer:
+      "Face Wash Fox có thể linh hoạt triển khai từ nhóm nhỏ khoảng 10-50 nhân viên đến các chương trình lớn cho 300-500 nhân viên trong cùng một ngày, tùy theo gói dịch vụ và không gian tại doanh nghiệp.",
+  },
+  {
+    question: "Dịch vụ chăm sóc da tại văn phòng có ảnh hưởng đến giờ làm việc không?",
+    answer:
+      "Các liệu trình được thiết kế gọn và tối ưu thời gian. Mỗi lượt trải nghiệm thường chỉ khoảng 10-15 phút, giúp nhân viên thư giãn và chăm sóc da mà vẫn không ảnh hưởng đến tiến độ công việc.",
+  },
+  {
+    question: "Doanh nghiệp cần chuẩn bị gì khi triển khai Fox SWAT tại văn phòng?",
+    answer:
+      "Doanh nghiệp chỉ cần bố trí một khu vực phù hợp để setup booth trải nghiệm. Face Wash Fox sẽ chuẩn bị thiết bị, sản phẩm, quy trình vận hành và đội ngũ chuyên viên đi kèm.",
+  },
+  {
+    question: "Voucher hoặc gift card có thể sử dụng linh hoạt theo thời gian của nhân viên không?",
+    answer:
+      "Có. Nhân viên có thể chủ động sắp xếp thời gian sử dụng voucher hoặc gift card tại hệ thống Face Wash Fox, giúp doanh nghiệp dễ triển khai mà không cần gom lịch cố định cho toàn bộ đội ngũ.",
+  },
+  {
+    question: "Doanh nghiệp có thể tùy chỉnh gói dịch vụ theo ngân sách không?",
+    answer:
+      "Có. Face Wash Fox có thể thiết kế gói chăm sóc phù hợp với ngân sách, mục tiêu và quy mô từng doanh nghiệp, từ voucher linh hoạt, gift card cố định đến trải nghiệm chăm sóc ngay tại văn phòng.",
+  },
 ]
 
 function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number) {
