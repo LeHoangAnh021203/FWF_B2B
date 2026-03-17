@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ArrowRight, ArrowUpRight, ChevronDown, Facebook, GamepadDirectional, Instagram, MessageCircle, Youtube } from "lucide-react"
+import { ArrowRight, ChevronUp, ArrowUpRight, ChevronDown, Facebook, GamepadDirectional, Instagram, MessageCircle, Phone, Youtube } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -37,10 +37,10 @@ export default function Home() {
   const [email, setEmail] = useState("")
   const [note, setNote] = useState("")
   const [selectedBranchId, setSelectedBranchId] = useState(branches[0]?.id ?? 1)
-  const [distanceByBranchId, setDistanceByBranchId] = useState<Record<number, number>>({})
+  const [, setDistanceByBranchId] = useState<Record<number, number>>({})
   const [nearestBranch, setNearestBranch] = useState<{ id: number; distanceKm: number } | null>(null)
-  const [locationError, setLocationError] = useState("")
-  const [isLocating, setIsLocating] = useState(false)
+  const [, setLocationError] = useState("")
+  const [, setIsLocating] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState("")
   const [submitSuccess, setSubmitSuccess] = useState("")
@@ -162,6 +162,10 @@ export default function Home() {
     bookingSection.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   return (
     <div>
       {/* Navigation */}
@@ -214,7 +218,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="text-xl md:text-xl lg:text-4xl font-bold text-orange-500 mb-6"
             >
-              FACE WASH FOX – GIẢI PHÁP CHĂM SÓC TINH TẾ DÀNH CHO DOANH NGHIỆP
+              FACE WASH FOX – GIẢI PHÁP ĐỒNG HÀNH CÙNG CHĂM SÓC NHÂN VIÊN DÀNH CHO DOANH NGHIỆP
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -292,12 +296,12 @@ export default function Home() {
       </section> */}
 
       <section id="fox-swat" className="py-20 bg-gradient-to-b from-orange-100 via-white to-orange-50">
-        <div className="container mx-auto px-4">
+        <div className="w-full px-4 md:px-8 xl:px-12 2xl:px-16">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-black w-full">DỊCH VỤ CUNG CẤP</h2>
-            <p className="text-xl md:text-[18px] font-bold mb-4 text-black">Hai giải gháp chăm sóc da linh hoạt cho doanh nghiệp</p>
+            <h2 className="text-xl md:text-xl font-bold mb-4 text-orange-400 w-full">KHÁM PHÁ</h2>
+            <p className="text-3xl md:text-3xl font-bold mb-4 text-blue-400">3 GÓI DỊCH VỤ</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-8 ">
+          <div className="grid gap-8">
             {caseStudies.map((study, index) => (
               <motion.div
                 key={study.title}
@@ -307,19 +311,19 @@ export default function Home() {
                 whileHover={{ y: -10 }}
                 className="group cursor-pointer"
               >
-                <Card className="relative overflow-visible  border border-orange-200/70 bg-white/95 shadow-[0_20px_60px_-24px_rgba(234,88,12,0.35)] transition-all duration-500 group-hover:border-orange-300 group-hover:shadow-[0_28px_80px_-28px_rgba(234,88,12,0.45)]">
+                <Card className="relative overflow-visible border border-orange-200/70 bg-white/95 shadow-[0_20px_60px_-24px_rgba(234,88,12,0.35)] transition-all duration-500 group-hover:border-orange-300 group-hover:shadow-[0_28px_80px_-28px_rgba(234,88,12,0.45)]">
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.18),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(254,215,170,0.28),transparent_30%)] opacity-80" />
                   <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent opacity-70" />
-                  <CardContent className="relative p-5 pt-8 text-orange-500 md:p-6 md:pt-9">
+                  <CardContent className="relative grid gap-8 p-5 pt-8 text-orange-500 md:p-6 md:pt-9 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.25fr)] lg:items-center lg:gap-10">
                     <div
                       className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border bg-white px-4 py-1.5 text-xl font-extrabold uppercase tracking-[0.24em] shadow-[0_12px_30px_-18px_rgba(15,23,42,0.28)] ${study.eyebrowClassName}`}
                     >
                       {study.eyebrow}
                     </div>
-                    <div className="relative mb-7 overflow-hidden rounded-[28px] border border-orange-100 bg-gradient-to-br from-orange-50 via-amber-50 to-white p-4 shadow-inner">
+                    <div className="relative overflow-hidden rounded-[28px] border border-orange-100 bg-gradient-to-br from-orange-50 via-amber-50 to-white p-4 shadow-inner">
                       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(251,146,60,0.12),transparent_28%)]" />
                       <div className="pointer-events-none absolute right-4 top-4 h-14 w-14 rounded-full bg-orange-200/30 blur-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-orange-300/40" />
-                      <div className="relative h-64 overflow-hidden rounded-[24px]">
+                      <div className="relative h-64 overflow-hidden rounded-[24px] lg:h-[360px]">
                         <Image
                           src={study.image || "/placeholder.svg"}
                           alt={study.title}
@@ -434,9 +438,6 @@ export default function Home() {
           <div className="mx-auto mb-14 max-w-3xl text-center">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-orange-400">Câu Hỏi Thường Gặp</p>
             <h2 className="text-3xl font-bold text-orange-500 md:text-5xl">Dịch vụ Face Wash Fox</h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-stone-500 md:text-lg">
-              Những điều doanh nghiệp thường hỏi trước khi triển khai voucher, gift card hoặc booth trải nghiệm tại văn phòng.
-            </p>
           </div>
 
           <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-2">
@@ -537,47 +538,6 @@ export default function Home() {
                   placeholder="Nhập email"
                   className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
                 />
-              </div>
-
-              <div>
-                <div className="mb-2 flex items-center justify-between gap-3">
-                  <label htmlFor="booking-branch" className="text-[1.05rem] font-semibold text-orange">
-                    Chi nhánh gần nhất
-                  </label>
-                  <button
-                    type="button"
-                    onClick={handleDetectNearestBranch}
-                    className="text-[1.05rem] text-[#0369a1] underline underline-offset-2"
-                  >
-                    {isLocating ? "Đang dò vị trí..." : "Dò vị trí để gợi ý"}
-                  </button>
-                </div>
-                <select
-                  id="booking-branch"
-                  className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-[1.05rem] text-[#111827] outline-none focus:border-orange-400 md:text-[1.15rem]"
-                  value={selectedBranchId}
-                  onChange={(event) => setSelectedBranchId(Number(event.target.value))}
-                >
-                  {branches.map((branch) => {
-                    const distance = distanceByBranchId[branch.id];
-                    return (
-                      <option key={branch.id} value={branch.id}>
-                        {branch.name}
-                        {typeof distance === "number"
-                          ? ` — ${distance.toFixed(1)} km`
-                          : ""}
-                      </option>
-                    );
-                  })}
-                </select>
-                {locationError ? (
-                  <p className="mt-2 text-[0.95rem] text-[#dc2626]">{locationError}</p>
-                ) : null}
-                {nearestBranch ? (
-                  <p className="mt-2 text-[0.95rem] text-[#0f766e]">
-                    Đã gợi ý chi nhánh gần nhất ({nearestBranch.distanceKm.toFixed(1)} km).
-                  </p>
-                ) : null}
               </div>
 
               <div>
@@ -726,6 +686,40 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <div className="fixed bottom-6 right-4 z-50 flex flex-col gap-3 md:bottom-8 md:right-6">
+
+        <Link
+          href="tel:0889866666"
+          aria-label="Gọi điện"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
+        >
+          <Phone className="h-6 w-6" />
+        </Link>
+        <Link
+          href="https://zalo.me/352472932154112250"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Nhắn tin"
+          className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-orange-500 text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
+        >
+          <Image
+            src="https://i.pinimg.com/736x/1c/e6/41/1ce64129a8c06a58fb2bbc79e70d5e0d.jpg"
+            alt="Nhắn tin"
+            width={30}
+            height={30}
+            className="rounded-full object-cover"
+          />
+        </Link>
+        <button
+          type="button"
+          onClick={handleScrollToTop}
+          aria-label="Lên đầu trang"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
+        >
+          <ChevronUp />
+        </button>
+      </div>
     </div>
   )
 }
@@ -778,7 +772,7 @@ const industries = [
     ),
   },
   {
-    name: "Linh hoạt sử dụng",
+    name: "Dễ dàng sử dụng",
     description: "Nhân viên có thể dễ dàng sử dụng dịch vụ tại hơn 50 cửa hàng Facewashfox trên toàn quốc",
     icon: () => (
       <svg
@@ -825,22 +819,22 @@ const industries = [
 const caseStudies: CaseStudy[] = [
 
   {
-    eyebrow: "FOX SWAT",
-    eyebrowClassName: "border-orange-300 text-orange-500",
-    iconClassName: "text-orange-500",
-    dialogBorderClassName: "border-orange-300",
-    title: "Gói chăm sóc ngay tại văn phòng",
+    eyebrow: "FOX CASH",
+    eyebrowClassName: "border-lime-300 text-lime-500",
+    iconClassName: "text-lime-500",
+    dialogBorderClassName: "border-lime-300",
+    title: "Gói linh hoạt, cá nhân hóa tối đa",
     description:
-      'Fox SWAT mang toàn bộ spa công nghệ cao của Face Wash Fox đến ngay tại doanh nghiệp, setup booth chuyên nghiệp để nhân viên thư giãn và chăm sóc da mà không cần di chuyển',
+      "Cash Voucher là giải pháp quà tặng đơn giản và linh hoạt nhất dành cho doanh nghiệp muốn tri ân nhân viên",
     image:
-      "/Fox Swat/fx3.JPG",
-    tags: ["Tạo điểm nhấn cho văn hóa doanh nghiệp", "Trải nghiệm thư giãn ngay trong giờ làm việc"],
+      "/Fox Swat/fx3.png",
+    tags: ["Cá nhân hóa 100%", "Không giới hạn loại dịch vụ", "Dễ dàng sử dụng"],
     detailPoints: [
-      "Đội ngũ chuyên gia cùng thiết bị hiện đại (máy soi da AI, các đầu máy rửa mặt) đến tận văn phòng.",
-      "Phù hợp cho Brand Day, sự kiện nội bộ, team building",
-      "Linh hoạt chăm sóc ngắn hạn, biến một ngày làm việc thành ngày trải nghiệm đáng nhớ và gắn kết đội nhóm",
+      "Mệnh giá đa dạng: 50.000 VNĐ – 100.000 VNĐ – 200.000 VNĐ – 500.000 VNĐ (có thể tùy chỉnh theo nhu cầu doanh nghiệp).",
+      "Cách sử dụng: Nhân viên nhận voucher như một khoản tiền mặt kỹ thuật số hoặc vật lý, mang đến bất kỳ cửa hàng Face Wash Fox nào trên toàn quốc để trừ trực tiếp vào chi phí dịch vụ chăm sóc da",
     ],
   },
+
 
   {
     eyebrow: "FOX GIFT CARD",
@@ -860,19 +854,20 @@ const caseStudies: CaseStudy[] = [
   },
 
   {
-    eyebrow: "FOX CASH",
-    eyebrowClassName: "border-lime-300 text-lime-500",
-    iconClassName: "text-lime-500",
-    dialogBorderClassName: "border-lime-300",
-    title: "Gói linh hoạt, cá nhân hóa tối đa",
+    eyebrow: "FOX SWAT",
+    eyebrowClassName: "border-orange-300 text-orange-500",
+    iconClassName: "text-orange-500",
+    dialogBorderClassName: "border-orange-300",
+    title: "Gói chăm sóc ngay tại văn phòng",
     description:
-      "Cash Voucher là giải pháp quà tặng đơn giản và linh hoạt nhất dành cho doanh nghiệp muốn tri ân nhân viên",
+      'Fox SWAT mang toàn bộ spa công nghệ cao của Face Wash Fox đến ngay tại doanh nghiệp, setup booth chuyên nghiệp để nhân viên thư giãn và chăm sóc da mà không cần di chuyển',
     image:
-      "/Fox Swat/fx3.png",
-    tags: ["Cá nhân hóa 100%", "Không giới hạn loại dịch vụ", "Dễ dàng sử dụng"],
+      "/Fox Swat/fx3.JPG",
+    tags: ["Tạo điểm nhấn cho văn hóa doanh nghiệp", "Trải nghiệm thư giãn ngay trong giờ làm việc"],
     detailPoints: [
-      "Mệnh giá đa dạng: 50.000 VNĐ – 100.000 VNĐ – 200.000 VNĐ – 500.000 VNĐ (có thể tùy chỉnh theo nhu cầu doanh nghiệp).",
-      "Cách sử dụng: Nhân viên nhận voucher như một khoản tiền mặt kỹ thuật số hoặc vật lý, mang đến bất kỳ cửa hàng Face Wash Fox nào trên toàn quốc để trừ trực tiếp vào chi phí dịch vụ chăm sóc da",
+      "Đội ngũ chuyên gia cùng thiết bị hiện đại (máy soi da AI, các đầu máy rửa mặt) đến tận văn phòng.",
+      "Phù hợp cho Brand Day, sự kiện nội bộ, team building",
+      "Linh hoạt chăm sóc ngắn hạn, biến một ngày làm việc thành ngày trải nghiệm đáng nhớ và gắn kết đội nhóm",
     ],
   },
 
