@@ -177,7 +177,7 @@ export default function Home() {
           <div className="flex items-center justify-between h-20">
             <Link href="/" className="flex items-center">
               <Image
-                src="/logo_FWF/logo.png"
+                src="/logo_FWF/Logo tiêu chuẩn.png"
                 alt="Face Wash Fox"
                 width={144}
                 height={144}
@@ -312,7 +312,7 @@ export default function Home() {
       <section id="fox-swat" className="py-20 bg-gradient-to-b from-orange-100 via-white to-orange-50">
         <div className="w-full px-4 md:px-8 xl:px-12 2xl:px-16">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-xl md:text-2xl font-bold mb-4 text-orange-300 w-full">KHÁM PHÁ</h2>
+            <h2 className="mb-4 text-sm font-bold uppercase  text-orange-300 md:text-base">KHÁM PHÁ</h2>
             <p className="text-3xl md:text-4xl font-bold mb-4 text-black">3 GÓI DỊCH VỤ</p>
           </div>
           <div className="grid gap-8">
@@ -450,7 +450,7 @@ export default function Home() {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.18),transparent_55%)]" />
         <div className="container relative mx-auto px-4">
           <div className="mx-auto mb-14 max-w-3xl text-center">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.28em] text-orange-400">Câu Hỏi Thường Gặp</p>
+            <p className="mb-4 text-sm font-bold uppercase  text-orange-300 md:text-base">Câu Hỏi Thường Gặp</p>
             <h2 className="text-3xl font-bold text-orange-500 md:text-5xl">Dịch vụ Face Wash Fox</h2>
           </div>
 
