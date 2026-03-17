@@ -224,9 +224,9 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-xl md:text-xl lg:text-4xl font-bold text-orange-500 mb-6"
+              className="text-xl md:text-xl lg:text-3xl font-bold text-orange-500 mb-6"
             >
-              FACE WASH FOX – GIẢI PHÁP ĐỒNG HÀNH <br /> CÙNG CHĂM SÓC NHÂN VIÊN DÀNH CHO DOANH NGHIỆP
+              FACE WASH FOX – ĐỒNG HẠNH CÙNG DOANH NGHIỆP: <br /> CHĂM SÓC NHÂN VIÊN, TRI ÂN ĐỐI TÁC
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
