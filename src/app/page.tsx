@@ -170,13 +170,19 @@ export default function Home() {
     <div>
       {/* Navigation */}
       <header
-        className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white/90 backdrop-blur-md border-b border-orange-100" : "bg-transparent"
+        className={`fixed top-0 w-full z-50 p-2 transition-all duration-300 ${isScrolled ? "bg-white/90 backdrop-blur-md border-b border-orange-100" : "bg-transparent"
           }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
-            <Link href="/" className="text-2xl font-bold text-orange-500">
-              Face Wash Fox
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/logo_FWF/logo.png"
+                alt="Face Wash Fox"
+                width={144}
+                height={144}
+                className="h-20 w-auto"
+              />
             </Link>
             <NavigationMenu>
               <NavigationMenuList>
@@ -226,7 +232,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
               className="text-xl md:text-xl lg:text-3xl font-bold text-orange-500 mb-6"
             >
-              FACE WASH FOX – ĐỒNG HẠNH CÙNG DOANH NGHIỆP: <br /> CHĂM SÓC NHÂN VIÊN, TRI ÂN ĐỐI TÁC
+              FACE WASH FOX – ĐỒNG HÀNH CÙNG DOANH NGHIỆP: <br /> CHĂM SÓC NHÂN VIÊN, TRI ÂN ĐỐI TÁC
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
