@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ArrowRight, ChevronUp, ArrowUpRight, ChevronDown, Facebook, GamepadDirectional, Instagram, MessageCircle, Phone, Youtube } from "lucide-react"
+import { ArrowRight, ChevronUp, ArrowUpRight, ChevronDown, GamepadDirectional, Phone } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -605,98 +605,168 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-orange-50 border-t border-orange-100">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Face Wash Fox</h3>
-              <p className="text-[13px] text-muted-foreground">
-                GIẢI PHÁP CHĂM SÓC TINH TẾ
-                DÀNH CHO DOANH NGHIỆP
+      <footer className="relative overflow-hidden bg-[#ff8c00] text-white">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,214,102,0.22),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,128,0,0.35),transparent_30%)]" />
+        <div className="relative mx-auto w-full max-w-[1800px] px-6 py-16 md:px-10 xl:px-16">
+          <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.2fr)_420px]">
+            <div className="max-w-4xl">
+              <h2 className="max-w-4xl text-2xl font-extrabold leading-tight md:text-4xl">
+                Da đẹp bắt đầu từ việc rửa mặt
+              </h2>
+              <p className="mt-5 max-w-2xl text-lg font-semibold leading-8 text-orange-50/95 md:text-xl">
+                Face Wash Fox - Chuỗi cửa hàng rửa mặt công nghệ tại <br /> Việt Nam.
               </p>
-              <div className="flex space-x-4">{/* Social Media Icons */}</div>
+              <p className="mt-3 text-xl font-black tracking-[0.08em] text-white md:text-xl">
+                Hotline: 0889 866 666
+              </p>
             </div>
 
-            <div>
-              <h4 className="font-semibold mb-4">Công ty</h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="https://facewashfox.com/ve-chung-toi/" className="text-sm text-muted-foreground hover:text-primary">
-                    Về chúng tôi
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://menu.facewashfox.com/˝" className="text-sm text-muted-foreground hover:text-primary">
-                    Dịch vụ
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://facewashfox.com/tin-tuc/" className="text-sm text-muted-foreground hover:text-primary">
-                    Tin tức
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://cuahang.facewashfox.com/" className="text-sm text-muted-foreground hover:text-primary">
-                    Cửa hàng
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
-              <ul className="space-y-2">
-                <li className="text-sm text-muted-foreground">Hồ Chí Minh, Hà Nội</li>
-
-                <li>
-                  <Link href="tel:+2341234567890" className="text-sm text-muted-foreground hover:text-primary">
-                    0889 866 666
-                  </Link>
-                </li>
-                <li>
-                  <div className="flex items-center gap-3">
-                    <Link
-                      href="https://www.facebook.com/facewashfox"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
-                    >
-                      <Facebook className="h-4 w-4" />
-                      Facebook
-                    </Link>
-                    <Link
-                      href="https://www.instagram.com/facewashfox"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
-                    >
-                      <Instagram className="h-4 w-4" />
-                      Instagram
-                    </Link>
-                    <Link
-                      href="https://www.youtube.com/@facewashfox"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
-                    >
-                      <Youtube className="h-4 w-4" />
-                      YouTube
-                    </Link>
-                    <Link
-                      href="https://zalo.me/352472932154112250"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
-                    >
-                      <MessageCircle className="h-4 w-4" />
-                      Zalo
-                    </Link>
-                  </div>
-                </li>
-              </ul>
+            <div className="flex flex-col gap-5 lg:items-end">
+              <Link
+                href="#booking"
+                className="inline-flex min-w-[280px] items-center justify-center rounded-full bg-cyan-400 px-8 py-5 text-center text-xl font-extrabold uppercase tracking-[0.08em] text-white shadow-[0_22px_45px_-24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-300"
+              >
+                ĐẶT LỊCH NGAY
+              </Link>
+              <Link
+                href="https://cuahang.facewashfox.com/"
+                className="inline-flex min-w-[280px] items-center justify-center rounded-full bg-cyan-400 px-8 py-5 text-center text-xl font-extrabold uppercase tracking-[0.08em] text-white shadow-[0_22px_45px_-24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-300"
+              >
+                HỆ THỐNG CHI NHÁNH
+              </Link>
             </div>
           </div>
-          <div className="mt-12 pt-8 border-t text-center text-sm text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} Madison. All rights reserved.</p>
+
+          <div className="mt-14 flex flex-col gap-10 xl:flex-row xl:items-end xl:justify-between">
+            <div className="flex items-center gap-6">
+              <div >
+                <Image
+                  src="/logo_FWF/Logo trên nền màu (1).png"
+                  alt="Face Wash Fox"
+                  width={220}
+                  height={120}
+                />
+              </div>
+
+              <div className="hidden flex-wrap items-center gap-5 xl:flex">
+                <Image
+                  src="/Footer/Graphic Element-70.png"
+                  alt="Footer graphic"
+                  width={100}
+                  height={100}
+                />
+                
+                <Image
+                  src="/Footer/Graphic Element-55.png"
+                  alt="Footer graphic"
+                  width={100}
+                  height={10}
+                />
+                <Image
+                  src="/Footer/Graphic Element-67.png"
+                  alt="Footer graphic"
+                  width={100}
+                  height={10}
+                />
+                <Image
+                  src="/Footer/Graphic Element-40.png"
+                  alt="Footer graphic"
+                  width={100}
+                  height={10}
+                />
+                <Image
+                  src="/Footer/Graphic Element-34.png"
+                  alt="Footer graphic"
+                  width={100}
+                  height={10}
+                />
+                <Image
+                  src="/Footer/Graphic Element-25.png"
+                  alt="Footer graphic"
+                  width={100}
+                  height={10}
+                />
+                <Image
+                  src="/Footer/Graphic Element-79.png"
+                  alt="Footer graphic"
+                  width={100}
+                  height={10}
+                />
+                <Image
+                  src="/Footer/Graphic Element-14.png"
+                  alt="Footer graphic"
+                  width={100}
+                  height={10}
+                />
+                <Image
+                  src="/Footer/Graphic Element-08.png"
+                  alt="Footer graphic"
+                  width={100}
+                  height={10}
+                />
+              </div>
+            </div>
+
+            {/* <div className="grid gap-4 text-sm font-semibold text-orange-50 md:grid-cols-2 xl:max-w-xl">
+              <div className="space-y-3">
+                <Link href="https://facewashfox.com/ve-chung-toi/" className="block transition-opacity hover:opacity-80">
+                  Ve chung toi
+                </Link>
+                <Link href="https://menu.facewashfox.com/" className="block transition-opacity hover:opacity-80">
+                  Dich vu
+                </Link>
+                <Link href="https://facewashfox.com/tin-tuc/" className="block transition-opacity hover:opacity-80">
+                  Tin tuc
+                </Link>
+                <Link href="https://cuahang.facewashfox.com/" className="block transition-opacity hover:opacity-80">
+                  Cua hang
+                </Link>
+              </div>
+              <div className="space-y-3">
+                <p>Ho Chi Minh, Ha Noi</p>
+                <Link href="tel:0889866666" className="block transition-opacity hover:opacity-80">
+                  0889 866 666
+                </Link>
+                <div className="flex flex-wrap items-center gap-4 pt-1">
+                  <Link
+                    href="https://www.facebook.com/facewashfox"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition-all hover:-translate-y-1 hover:bg-white/25"
+                  >
+                    <Facebook className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href="https://www.instagram.com/facewashfox"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition-all hover:-translate-y-1 hover:bg-white/25"
+                  >
+                    <Instagram className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href="https://www.youtube.com/@facewashfox"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition-all hover:-translate-y-1 hover:bg-white/25"
+                  >
+                    <Youtube className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    href="https://zalo.me/352472932154112250"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 transition-all hover:-translate-y-1 hover:bg-white/25"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </div> */}
+          </div>
+
+          <div className="mt-12 border-t border-white/15 pt-6 text-sm font-medium text-orange-100/90">
+            <p>&copy; {new Date().getFullYear()} Face Wash Fox. All rights reserved.</p>
           </div>
         </div>
       </footer>
