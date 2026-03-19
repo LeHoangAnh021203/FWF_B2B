@@ -9,12 +9,6 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu"
 import { branches } from "@/data/branches"
 import "./styles/animation.css"
 
@@ -31,21 +25,22 @@ type CaseStudy = {
 }
 
 export default function Home() {
+  const headerLinks = [
+    { label: "Dịch Vụ", href: "#fox-swat" },
+    { label: "FAQ", href: "#faq" },
+  ]
+
   const [isScrolled, setIsScrolled] = useState(false)
   const [fullName, setFullName] = useState("")
   const [phone, setPhone] = useState("")
   const [email, setEmail] = useState("")
   const [note, setNote] = useState("")
-  const [selectedBranchId, setSelectedBranchId] = useState(branches[0]?.id ?? 1)
-  const [, setDistanceByBranchId] = useState<Record<number, number>>({})
-  const [nearestBranch, setNearestBranch] = useState<{ id: number; distanceKm: number } | null>(null)
-  const [, setLocationError] = useState("")
-  const [, setIsLocating] = useState(false)
+  const [selectedBranchId] = useState(branches[0]?.id ?? 1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState("")
   const [submitSuccess, setSubmitSuccess] = useState("")
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null)
-  const [openFaqIndex, setOpenFaqIndex] = useState(0)
+  const [openFaqIndex, setOpenFaqIndex] = useState(-1)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,54 +48,6 @@ export default function Home() {
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const handleDetectNearestBranch = () => {
-    if (!navigator.geolocation) {
-      setLocationError("Trình duyệt không hỗ trợ định vị.")
-      return
-    }
-
-    setIsLocating(true)
-    setLocationError("")
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords
-        const distances = Object.fromEntries(
-          branches.map((branch) => [
-            branch.id,
-            getDistanceKm(latitude, longitude, branch.lat, branch.lng),
-          ]),
-        ) as Record<number, number>
-        setDistanceByBranchId(distances)
-
-        const nearest = branches.reduce(
-          (best, branch) => {
-            const distanceKm = distances[branch.id]
-            if (!best || distanceKm < best.distanceKm) {
-              return { id: branch.id, distanceKm }
-            }
-            return best
-          },
-          null as { id: number; distanceKm: number } | null,
-        )
-
-        if (nearest) {
-          setNearestBranch(nearest)
-          setSelectedBranchId(nearest.id)
-        }
-        setIsLocating(false)
-      },
-      () => {
-        setLocationError("Không thể lấy vị trí hiện tại. Vui lòng chọn chi nhánh thủ công.")
-        setIsLocating(false)
-      },
-      { enableHighAccuracy: true, timeout: 10000 },
-    )
-  }
-
-  useEffect(() => {
-    handleDetectNearestBranch()
   }, [])
 
   const handleSubmitBooking = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -136,7 +83,7 @@ export default function Home() {
           branchAddress: selectedBranch.address,
           branchCity: selectedBranch.city,
           branchMapsUrl: selectedBranch.mapsUrl,
-          nearestDistanceKm: nearestBranch?.id === selectedBranch.id ? nearestBranch.distanceKm : null,
+          nearestDistanceKm: null,
         }),
       })
 
@@ -174,41 +121,46 @@ export default function Home() {
           }`}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex h-16 items-center justify-between gap-3 md:h-20 md:gap-6">
             <Link href="/" className="flex items-center">
               <Image
                 src="/logo_FWF/Logo tiêu chuẩn.png"
                 alt="Face Wash Fox"
                 width={144}
                 height={144}
-                className="h-20 w-auto"
+                className="h-12 w-auto md:h-20"
               />
             </Link>
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    asChild
-                    className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-white/80 px-4 py-2 text-sm font-medium text-orange-950 transition-colors hover:bg-orange-100 hover:text-orange-900 focus:bg-orange-100 focus:text-orange-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                  >
-                    <Link href="https://menu.facewashfox.com/">
-                      FOX MENU
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    asChild
-                    className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-white/80 px-4 py-2 text-sm font-medium text-orange-950 transition-colors hover:bg-orange-100 hover:text-orange-900 focus:bg-orange-100 focus:text-orange-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                  >
-                    <Link href="https://cuahang.facewashfox.com/">
-                      FOX MAP
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-            <Button onClick={handleScrollToBooking} className="bg-orange-500 text-white hover:bg-orange-600">Liên Hệ</Button>
+            <nav className="nav-shimmer hidden items-center gap-3 rounded-full border border-orange-300/80 bg-white/90 px-4 py-3 shadow-[0_18px_40px_-28px_rgba(234,88,12,0.38)] backdrop-blur md:flex">
+              <Link
+                href="https://menu.facewashfox.com/"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-transparent px-6 text-lg font-semibold text-slate-600 transition-all duration-300 hover:border-orange-200 hover:bg-orange-50 hover:text-orange-500"
+              >
+                Fox Menu
+              </Link>
+              <Link
+                href="https://cuahang.facewashfox.com/"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-transparent px-6 text-lg font-semibold text-slate-600 transition-all duration-300 hover:border-orange-200 hover:bg-orange-50 hover:text-orange-500"
+              >
+                Fox Map
+              </Link>
+              {headerLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-transparent px-6 text-lg font-semibold text-slate-600 transition-all duration-300 hover:border-orange-200 hover:bg-orange-50 hover:text-orange-500"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+            <Button
+              onClick={handleScrollToBooking}
+              className="nav-shimmer h-11 rounded-full border border-orange-300 bg-orange-500 px-4 text-sm font-semibold text-white shadow-[0_18px_40px_-28px_rgba(234,88,12,0.45)] hover:bg-orange-600 md:h-14 md:px-10 md:text-lg"
+            >
+              <span className="md:hidden">Liên Hệ</span>
+              <span className="hidden md:inline">Liên Hệ Ngay</span>
+            </Button>
           </div>
         </div>
       </header>
@@ -216,33 +168,35 @@ export default function Home() {
       {/* Hero Section */}
       <section className="min-h-screen relative overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white">
 
-        <motion.div className="container mx-auto px-4 pt-32 pb-16 relative z-10">
+        <motion.div className="container relative z-10 mx-auto px-4 pb-16 pt-24 md:pt-32">
           <div className="max-w-4xl mx-auto text-center mb-16">
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="mb-4 text-sm font-bold uppercase  text-orange-300 md:text-base"
+              className="mx-auto mb-6 inline-flex max-w-full items-center gap-3 rounded-full border border-orange-200 bg-white/90 px-4 py-3 text-[11px] font-bold text-orange-500 shadow-[0_20px_40px_-28px_rgba(234,88,12,0.45)] backdrop-blur-sm sm:px-6 sm:text-sm md:px-8 md:py-4 md:text-base"
             >
-              Giới thiệu
+              <span className="hero-status-dot h-2.5 w-2.5 rounded-full bg-orange-500 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" />
+              <span className="truncate">B2B Giải Pháp Doanh Nghiệp</span>
             </motion.p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-xl md:text-xl lg:text-3xl font-bold text-orange-500 mb-6"
+              className="mb-6 text-2xl font-bold text-orange-500 sm:text-3xl md:text-4xl lg:text-5xl"
             >
-              FACE WASH FOX – ĐỒNG HÀNH CÙNG DOANH NGHIỆP: <br /> CHĂM SÓC NHÂN VIÊN, TRI ÂN ĐỐI TÁC
+              FACE WASH FOX – ĐỒNG HÀNH CÙNG DOANH NGHIỆP:
+              <br className="hidden sm:block" /> CHĂM SÓC NHÂN VIÊN, TRI ÂN ĐỐI TÁC
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-[18px] text-stone-700 mb-8"
+              className="mb-8 text-base leading-8 text-stone-700 sm:text-lg"
             >
               <span className="text-orange-400 font-semibold">Face Wash Fox</span> mang đến giải pháp chăm sóc da
               và chăm sóc sức khỏe tinh thần ngay tại nơi làm việc,
-              <br />
+              <br className="hidden sm:block" />
               giúp doanh nghiệp nâng tầm phúc lợi dành cho nhân
               viên theo cách thiết thực, gần gũi và tạo dấu ấn riêng.
             </motion.p>
@@ -252,11 +206,20 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button asChild size="lg" className="bg-orange-500 text-white hover:bg-orange-600">
+              <Button asChild size="lg" className="min-h-12 rounded-[32px] bg-orange-500 px-6 text-white hover:bg-orange-600 font-bold sm:px-8">
                 <Link href="#fox-swat">
-                  Tham Khảo Dịch Vụ
+                  Khám Phá Dịch Vụ
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
+              </Button>
+              <Button
+                type="button"
+                size="lg"
+                variant="outline"
+                onClick={handleScrollToBooking}
+                className="min-h-12 rounded-[32px] border-2 border-stone-200 bg-white px-6 font-bold text-slate-800 shadow-[0_18px_35px_-24px_rgba(15,23,42,0.22)] hover:border-orange-500 hover:bg-white hover:text-orange-500 sm:px-8"
+              >
+                Đặt Lịch Tư Vấn
               </Button>
 
             </motion.div>
@@ -265,11 +228,11 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="relative max-w-5xl mx-auto"
+            className="relative mx-auto max-w-5xl"
           >
             <video
               src="/video/To_video_ngn_202512051030.mp4"
-              className="w-full rounded-lg shadow-2xl"
+              className="w-full rounded-2xl shadow-2xl"
               autoPlay
               muted
               loop
@@ -310,7 +273,7 @@ export default function Home() {
       </section> */}
 
       <section id="fox-swat" className="py-20 bg-gradient-to-b from-orange-100 via-white to-orange-50">
-        <div className="w-full px-4 md:px-8 xl:px-12 2xl:px-16">
+        <div className="mx-auto w-full max-w-[1480px] px-4 md:px-8 xl:px-10">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="mb-4 text-sm font-bold uppercase  text-orange-300 md:text-base">KHÁM PHÁ</h2>
             <p className="text-3xl md:text-4xl font-bold mb-4 text-black">3 GÓI DỊCH VỤ</p>
@@ -328,16 +291,17 @@ export default function Home() {
                 <Card className="relative overflow-visible border border-orange-200/70 bg-white/95 shadow-[0_20px_60px_-24px_rgba(234,88,12,0.35)] transition-all duration-500 group-hover:border-orange-300 group-hover:shadow-[0_28px_80px_-28px_rgba(234,88,12,0.45)]">
                   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.18),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(254,215,170,0.28),transparent_30%)] opacity-80" />
                   <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent opacity-70" />
-                  <CardContent className="relative grid gap-8 p-5 pt-8 text-orange-500 md:p-6 md:pt-9 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.25fr)] lg:items-center lg:gap-10">
+                  <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-0 rounded-[inherit] bg-orange-950/45 opacity-0 backdrop-blur-[4px] transition-all duration-500 ease-out group-hover:w-full group-hover:opacity-100" />
+                  <CardContent className="relative grid gap-5 p-4 pt-8 text-orange-500 sm:p-5 md:p-6 md:pt-9 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center lg:gap-8">
                     <div
-                      className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border bg-white px-4 py-1.5 text-xl font-extrabold uppercase tracking-[0.24em] shadow-[0_12px_30px_-18px_rgba(15,23,42,0.28)] ${study.eyebrowClassName}`}
+                      className={`absolute left-1/2 top-0 z-20 -translate-x-1/2 -translate-y-1/2 rounded-full border bg-white px-3 py-1 text-sm font-extrabold uppercase tracking-[0.2em] shadow-[0_12px_30px_-18px_rgba(15,23,42,0.28)] sm:px-4 sm:py-1.5 sm:text-base lg:text-xl ${study.eyebrowClassName}`}
                     >
                       {study.eyebrow}
                     </div>
                     <div className="relative overflow-hidden rounded-[28px] border border-orange-100 bg-gradient-to-br from-orange-50 via-amber-50 to-white p-4 shadow-inner">
                       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(251,146,60,0.12),transparent_28%)]" />
                       <div className="pointer-events-none absolute right-4 top-4 h-14 w-14 rounded-full bg-orange-200/30 blur-2xl transition-all duration-500 group-hover:scale-125 group-hover:bg-orange-300/40" />
-                      <div className="relative h-64 overflow-hidden rounded-[24px] lg:h-[360px]">
+                      <div className="relative h-52 overflow-hidden rounded-[24px] sm:h-56 lg:h-[300px]">
                         <Image
                           src={study.image || "/placeholder.svg"}
                           alt={study.title}
@@ -346,32 +310,33 @@ export default function Home() {
                         />
                       </div>
                     </div>
-                    <div className="px-2 pb-2 md:px-3">
-                      <h3 className="mb-3 text-2xl font-semibold leading-tight text-orange-600 transition-colors duration-300 group-hover:text-orange-500">
+                    <div className="px-2 py-1 md:px-3">
+                      <h3 className="mb-3 text-xl font-semibold leading-tight text-orange-600 transition-colors duration-300 group-hover:text-orange-500 sm:text-2xl">
                         {study.title}
                       </h3>
                       <p
-                        className="mb-5 max-w-2xl text-lg leading-8 text-stone-500"
+                        className="mb-4 max-w-2xl text-sm leading-6 text-stone-500 sm:text-base sm:leading-7 lg:line-clamp-3"
                         dangerouslySetInnerHTML={{ __html: study.description }}
                       />
-                      <div className="mb-6 flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2">
                         {study.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="rounded-full border border-orange-300/80 bg-white/90 px-4 py-2 text-sm font-medium text-orange-600 shadow-sm transition-all duration-300 group-hover:border-orange-400 group-hover:bg-orange-50"
+                            className="rounded-full border border-orange-300/80 bg-white/90 px-3 py-1.5 text-xs font-medium text-orange-600 shadow-sm transition-all duration-300 group-hover:border-orange-400 group-hover:bg-orange-50 sm:text-sm"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
+                    </div>
+                    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100">
                       <Button
                         type="button"
-                        variant="ghost"
-                        className="h-auto rounded-full border border-orange-200 bg-orange-50 px-5 py-3 text-base font-medium text-orange-600 transition-all duration-300 hover:border-orange-300 hover:bg-orange-100 hover:text-orange-700 group-hover:translate-x-1"
                         onClick={() => setSelectedStudy(study)}
+                        className="pointer-events-auto translate-y-4 rounded-full bg-white/95 px-5 py-2.5 text-sm font-semibold text-orange-600 shadow-[0_18px_38px_-20px_rgba(15,23,42,0.35)] transition-all duration-300 hover:bg-white group-hover:translate-y-0 sm:px-6 sm:py-3 sm:text-base"
                       >
                         Chi tiết
-                        <ArrowUpRight className="w-4 h-4 ml-2" />
+                        <ArrowUpRight className="ml-2 h-4 w-4" />
                       </Button>
                     </div>
                   </CardContent>
@@ -413,32 +378,40 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-orange-500">Điều khiến Face Wash Fox trở thành <br /> lựa chọn của nhiều doanh nghiệp</h2>
 
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {industries.map((industry, index) => (
               <motion.div
                 key={industry.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative"
+                className="group relative h-full"
               >
-                <div className="relative p-8 rounded-2xl bg-white border border-orange-200 shadow-sm hover:bg-orange-50 transition-all duration-300">
-                  <div className="mb-6 relative">
-                    <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center relative group-hover:scale-110 transition-transform duration-300">
-                      <div className="absolute inset-0 rounded-full bg-orange-500/70 blur-xl group-hover:bg-orange-300/70 transition-all duration-300" />
-                      <div className="absolute inset-0 rounded-full bg-orange opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="relative z-10 text-primary [&_svg]:w-8 [&_svg]:h-8">
-                        <industry.icon />
+                <div className="relative h-full overflow-hidden rounded-[28px] bg-[#fff5eb] shadow-[0_18px_50px_-30px_rgba(234,88,12,0.35)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_24px_60px_-30px_rgba(234,88,12,0.42)]">
+                  <Image
+                    src="/FAQ_Images/Copy of Untitled279_20241128105813 (1).png"
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
+                    className="pointer-events-none select-none object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  />
+                  <div className="relative m-3 flex h-[calc(100%-24px)] min-h-[296px] flex-col rounded-[22px] bg-[#fff4ea]/86 p-6 backdrop-blur-[2x] md:m-4 md:min-h-[328px] md:rounded-[26px] md:p-8">
+                    <div className="relative mb-6 flex justify-center">
+                      <div className="flex h-18 w-18 items-center justify-center rounded-full border border-orange-200/80 bg-[linear-gradient(180deg,rgba(255,197,143,0.98),rgba(255,173,92,0.95))] shadow-[0_16px_30px_-18px_rgba(234,88,12,0.55)] transition-transform duration-300 group-hover:scale-110">
+                        <div className="flex text-center justify-center items-center absolute inset-[-8px] rounded-full bg-orange-400/30 blur-xl transition-all duration-300 group-hover:bg-orange-300/40" />
+                        <div className="justify-center items-center text-center relative z-10 text-white drop-shadow-[0_2px_6px_rgba(194,65,12,0.35)] [&_svg]:h-8 [&_svg]:w-8">
+                          <industry.icon />
+                        </div>
                       </div>
                     </div>
+                    <h3 className="mb-3 text-[18px] font-semibold text-orange-950 transition-colors duration-300 group-hover:text-orange-600">
+                      {industry.name}
+                    </h3>
+                    <p
+                      className="flex-1 text-sm leading-7 text-stone-600 transition-colors duration-300 group-hover:text-stone-800"
+                      dangerouslySetInnerHTML={{ __html: industry.description }}
+                    />
                   </div>
-                  <h3 className="text-[18px] font-semibold mb-3 text-orange-950 group-hover:text-orange-600 transition-colors duration-300">
-                    {industry.name}
-                  </h3>
-                  <p
-                    className="text-stone-600 group-hover:text-stone-800 transition-colors duration-300 text-[14px]"
-                    dangerouslySetInnerHTML={{ __html: industry.description }}
-                  />
                 </div>
               </motion.div>
             ))}
@@ -446,56 +419,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="faq" className="relative overflow-hidden bg-gradient-to-b from-white via-orange-50/60 to-white py-20">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.18),transparent_55%)]" />
-        <div className="container relative mx-auto px-4">
-          <div className="mx-auto mb-14 max-w-3xl text-center">
-            <p className="mb-4 text-sm font-bold uppercase  text-orange-300 md:text-base">Câu Hỏi Thường Gặp</p>
-            <h2 className="text-3xl font-bold text-orange-500 md:text-5xl">Dịch vụ Face Wash Fox</h2>
-          </div>
 
-          <div className="mx-auto grid max-w-6xl gap-5 lg:grid-cols-2">
-            {faqItems.map((item, index) => {
-              const isOpen = openFaqIndex === index
-
-              return (
-                <motion.div
-                  key={item.question}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.45, delay: index * 0.06 }}
-                >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
-                    className={`w-full rounded-[28px] border bg-white/95 p-6 text-left shadow-[0_18px_50px_-30px_rgba(234,88,12,0.35)] transition-all duration-300 ${isOpen ? "border-orange-300 shadow-[0_24px_60px_-30px_rgba(234,88,12,0.42)]" : "border-orange-100 hover:-translate-y-1 hover:border-orange-200"}`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className={`mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors ${isOpen ? "border-orange-300 bg-orange-100 text-orange-600" : "border-orange-200 bg-orange-50 text-orange-500"}`}>
-                        {index + 1}
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between gap-4">
-                          <h3 className="text-xl font-semibold leading-tight text-stone-900">
-                            {item.question}
-                          </h3>
-                          <ChevronDown className={`mt-1 h-5 w-5 shrink-0 text-orange-500 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
-                        </div>
-                        <div className={`grid transition-all duration-300 ${isOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
-                          <div className="overflow-hidden">
-                            <p className="pr-8 text-base leading-8 text-stone-600">{item.answer}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
 
 
       {/* CTA Section */}
@@ -503,16 +427,16 @@ export default function Home() {
 
         <div className="container mx-auto px-4">
 
-          <div className="max-w-2xl mx-auto text-center mb">
+          <div className="mx-auto max-w-2xl text-center">
             <a
               href="tel:0889866666"
-              className="flex h-16 w-full items-center justify-center rounded-[14px] bg-orange-500 px-8 text-center text-[1.35rem] font-extrabold text-white transition-opacity hover:opacity-90 md:text-[1.65rem]"
+              className="flex h-14 w-full items-center justify-center rounded-[14px] bg-orange-500 px-6 text-center text-lg font-extrabold text-white transition-opacity hover:opacity-90 md:h-16 md:px-8 md:text-[1.65rem]"
             >
               Liên hệ để nhận báo giá
             </a>
-            <h2 className="text-xl md:text-3xl font-bold mb-4 pt-5 text-black">Doanh Nghiệp Của Bạn Đã Sẵn Sàng Chưa?</h2>
-            <p className="text-[16px] text-muted-foreground mb-8">
-              Hãy cung cấp cho chúng tôi thông tin của bạn để chúng tôi biết rằng bạn đã sẵn sàng <br /> để hợp tác với FWF nhé!
+            <h2 className="mb-4 pt-5 text-xl font-bold text-black md:text-3xl">Doanh Nghiệp Của Bạn Đã Sẵn Sàng Chưa?</h2>
+            <p className="mb-8 text-sm leading-7 text-muted-foreground md:text-[16px]">
+              Hãy cung cấp cho chúng tôi thông tin của bạn để chúng tôi biết rằng bạn đã sẵn sàng <br className="hidden sm:block" /> để hợp tác với FWF nhé!
             </p>
             <form className="mt-8 space-y-6 md:mt-10" onSubmit={handleSubmitBooking}>
               <div className="grid gap-5 md:grid-cols-2">
@@ -524,7 +448,7 @@ export default function Home() {
                     onChange={(event) => setFullName(event.target.value)}
                     placeholder="Nhập họ và tên"
                     required
-                    className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
+                    className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-base text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
                   />
                 </div>
 
@@ -537,7 +461,7 @@ export default function Home() {
                     onChange={(event) => setPhone(event.target.value)}
                     placeholder="Nhập số điện thoại"
                     required
-                    className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
+                    className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-base text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
                   />
                 </div>
               </div>
@@ -550,7 +474,7 @@ export default function Home() {
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   placeholder="Nhập email"
-                  className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
+                  className="h-14 w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 text-base text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
                 />
               </div>
 
@@ -562,7 +486,7 @@ export default function Home() {
                   value={note}
                   onChange={(event) => setNote(event.target.value)}
                   placeholder="Hãy cho chúng tôi biết bạn đang cần gì..."
-                  className="w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 py-4 text-[1.05rem] text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
+                  className="w-full rounded-[14px] border border-orange-200 bg-orange-50 px-5 py-4 text-base text-[#111827] outline-none placeholder:text-[#8b96a5] focus:border-orange-400 md:text-[1.15rem]"
                 />
               </div>
 
@@ -574,7 +498,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="h-16 w-full rounded-[14px] bg-orange-500 px-8 text-[1.35rem] font-extrabold text-white transition-opacity hover:opacity-90 md:text-[1.65rem]"
+                className="h-14 w-full rounded-[14px] bg-orange-500 px-8 text-lg font-extrabold text-white transition-opacity hover:opacity-90 md:h-16 md:text-[1.65rem]"
               >
                 {isSubmitting ? "Đang gửi thông tin..." : "Đặt lịch tư vấn miễn phí"}
               </button>
@@ -604,47 +528,102 @@ export default function Home() {
         </Dialog>
       </section>
 
+
+      {/* FAQ */}
+
+      <section id="faq" className="relative overflow-hidden bg-gradient-to-b from-white via-orange-50/60 to-white py-20">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.18),transparent_55%)]" />
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto mb-14 max-w-3xl text-center">
+            <p className="mb-4 text-sm font-bold uppercase  text-orange-300 md:text-base">Câu Hỏi Thường Gặp</p>
+            <h2 className="text-3xl font-bold text-orange-500 md:text-5xl">Dịch vụ Face Wash Fox</h2>
+          </div>
+
+          <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-2 lg:gap-5">
+            {faqItems.map((item, index) => {
+              const isOpen = openFaqIndex === index
+
+              return (
+                <motion.div
+                  key={item.question}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: index * 0.06 }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
+                    className={`w-full rounded-[24px] border bg-white/95 p-5 text-left shadow-[0_18px_50px_-30px_rgba(234,88,12,0.35)] transition-all duration-300 md:rounded-[28px] md:p-6 ${isOpen ? "border-orange-300 shadow-[0_24px_60px_-30px_rgba(234,88,12,0.42)]" : "border-orange-100 hover:-translate-y-1 hover:border-orange-200"}`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-colors ${isOpen ? "border-orange-300 bg-orange-100 text-orange-600" : "border-orange-200 bg-orange-50 text-orange-500"}`}>
+                        {index + 1}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between gap-4">
+                          <h3 className="text-lg font-semibold leading-tight text-stone-900 md:text-xl">
+                            {item.question}
+                          </h3>
+                          <ChevronDown className={`mt-1 h-5 w-5 shrink-0 text-orange-500 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+                        </div>
+                        <div className={`grid transition-all duration-300 ${isOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+                          <div className="overflow-hidden">
+                            <p className="pr-0 text-sm leading-7 text-stone-600 md:pr-8 md:text-base md:leading-8">{item.answer}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="relative overflow-hidden bg-[#ff8c00] text-white">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,214,102,0.22),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,128,0,0.35),transparent_30%)]" />
-        <div className="relative mx-auto w-full max-w-[1800px] px-6 py-16 md:px-10 xl:px-16">
-          <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.2fr)_420px]">
+        <div className="relative mx-auto w-full max-w-[1800px] px-4 py-14 sm:px-6 md:px-10 xl:px-16">
+          <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.2fr)_420px] lg:gap-12">
             <div className="max-w-4xl">
               <h2 className="max-w-4xl text-2xl font-extrabold leading-tight md:text-4xl">
                 Da đẹp bắt đầu từ việc rửa mặt
               </h2>
-              <p className="mt-5 max-w-2xl text-lg font-semibold leading-8 text-orange-50/95 md:text-xl">
-                Face Wash Fox - Chuỗi cửa hàng rửa mặt công nghệ tại <br /> Việt Nam.
+              <p className="mt-5 max-w-2xl text-base font-semibold leading-7 text-orange-50/95 md:text-xl md:leading-8">
+                Face Wash Fox - Chuỗi cửa hàng rửa mặt công nghệ tại <br className="hidden sm:block" /> Việt Nam.
               </p>
-              <p className="mt-3 text-xl font-black tracking-[0.08em] text-white md:text-xl">
+              <p className="mt-3 text-lg font-black tracking-[0.08em] text-white md:text-xl">
                 Hotline: 0889 866 666
               </p>
             </div>
 
-            <div className="flex flex-col gap-5 lg:items-end">
+            <div className="flex flex-col gap-4 lg:items-end lg:gap-5">
               <Link
                 href="#booking"
-                className="inline-flex min-w-[280px] items-center justify-center rounded-full bg-cyan-400 px-8 py-5 text-center text-xl font-extrabold uppercase tracking-[0.08em] text-white shadow-[0_22px_45px_-24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-300"
+                className="inline-flex w-full items-center justify-center rounded-full bg-cyan-400 px-6 py-4 text-center text-base font-extrabold uppercase tracking-[0.08em] text-white shadow-[0_22px_45px_-24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-300 sm:min-w-[280px] sm:w-auto sm:px-8 sm:py-5 sm:text-xl"
               >
                 ĐẶT LỊCH NGAY
               </Link>
               <Link
                 href="https://cuahang.facewashfox.com/"
-                className="inline-flex min-w-[280px] items-center justify-center rounded-full bg-cyan-400 px-8 py-5 text-center text-xl font-extrabold uppercase tracking-[0.08em] text-white shadow-[0_22px_45px_-24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-300"
+                className="inline-flex w-full items-center justify-center rounded-full bg-cyan-400 px-6 py-4 text-center text-base font-extrabold uppercase tracking-[0.08em] text-white shadow-[0_22px_45px_-24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-300 sm:min-w-[280px] sm:w-auto sm:px-8 sm:py-5 sm:text-xl"
               >
                 HỆ THỐNG CHI NHÁNH
               </Link>
             </div>
           </div>
 
-          <div className="mt-14 flex flex-col gap-10 xl:flex-row xl:items-end xl:justify-between">
-            <div className="flex items-center gap-6">
+          <div className="mt-12 flex flex-col gap-8 xl:mt-14 xl:flex-row xl:items-end xl:justify-between xl:gap-10">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
               <div >
                 <Image
                   src="/logo_FWF/Logo trên nền màu (1).png"
                   alt="Face Wash Fox"
                   width={220}
                   height={120}
+                  className="w-[180px] sm:w-[220px]"
                 />
               </div>
 
@@ -655,7 +634,7 @@ export default function Home() {
                   width={100}
                   height={100}
                 />
-                
+
                 <Image
                   src="/Footer/Graphic Element-55.png"
                   alt="Footer graphic"
@@ -771,35 +750,35 @@ export default function Home() {
         </div>
       </footer>
 
-      <div className="fixed bottom-6 right-4 z-50 flex flex-col gap-3 md:bottom-8 md:right-6">
+      <div className="fixed bottom-5 right-3 z-50 flex flex-col gap-2 sm:bottom-6 sm:right-4 sm:gap-3 md:bottom-8 md:right-6">
 
         <Link
           href="tel:0889866666"
           aria-label="Gọi điện"
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600 sm:h-14 sm:w-14"
         >
-          <Phone className="h-6 w-6" />
+          <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
         </Link>
         <Link
           href="https://zalo.me/352472932154112250"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Nhắn tin"
-          className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
+          className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600 sm:h-14 sm:w-14"
         >
           <Image
             src="https://i.pinimg.com/736x/1c/e6/41/1ce64129a8c06a58fb2bbc79e70d5e0d.jpg"
             alt="Nhắn tin"
             width={50}
             height={50}
-            className="rounded-full object-cover"
+            className="h-full w-full rounded-full object-cover"
           />
         </Link>
         <button
           type="button"
           onClick={handleScrollToTop}
           aria-label="Lên đầu trang"
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600"
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500 text-white shadow-[0_16px_35px_-18px_rgba(234,88,12,0.75)] transition-all duration-300 hover:-translate-y-1 hover:bg-orange-600 sm:h-14 sm:w-14"
         >
           <ChevronUp />
         </button>
@@ -984,15 +963,3 @@ const faqItems = [
       "Có. Face Wash Fox có thể thiết kế gói chăm sóc phù hợp với ngân sách, mục tiêu và quy mô từng doanh nghiệp, từ voucher linh hoạt, gift card cố định đến trải nghiệm chăm sóc ngay tại văn phòng.",
   },
 ]
-
-function getDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number) {
-  const toRad = (deg: number) => (deg * Math.PI) / 180
-  const earthRadiusKm = 6371
-  const dLat = toRad(lat2 - lat1)
-  const dLon = toRad(lon2 - lon1)
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-  return earthRadiusKm * c
-}
