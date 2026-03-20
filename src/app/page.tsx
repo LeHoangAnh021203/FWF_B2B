@@ -21,14 +21,12 @@ export default function Home() {
               <span className="hero-status-dot h-2.5 w-2.5 rounded-full bg-orange-500 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" />
               <span className="truncate">B2B Giải Pháp Doanh Nghiệp</span>
             </p>
-            <h1 className="mb-6 text-2xl font-bold text-orange-500 sm:text-3xl md:text-4xl lg:text-3xl">
-              FACE WASH FOX – ĐỒNG HÀNH CÙNG DOANH NGHIỆP:
-              <br className="hidden sm:block" /> CHĂM SÓC NHÂN VIÊN, TRI ÂN ĐỐI TÁC
+            <h1 className="mb-6 text-2xl font-bold text-[#0097b2] sm:text-3xl md:text-4xl lg:text-3xl">
+              Để nhân viên cảm nhận được sự quan tâm <br />
+              Để đối tác nhớ mãi dấu ấn của bạn.
             </h1>
-            <p className="mb-8 text-base leading-8 text-stone-700 sm:text-[15px]">
-              <span className="font-semibold text-orange-400">Face Wash Fox</span> mang đến giải pháp chăm sóc da và chăm sóc sức khỏe tinh thần ngay tại nơi làm việc,
-              <br className="hidden sm:block" />
-              giúp doanh nghiệp nâng tầm phúc lợi dành cho nhân viên theo cách thiết thực, gần gũi và tạo dấu ấn riêng.
+            <p className="mb-8 text-base leading-8 text-stone-700 sm:text-[18px]">
+              <span className="font-semibold text-orange-400">Face Wash Fox</span> là giải pháp phúc lợi & quà tặng doanh nghiệp thiết thực, tinh tế, tạo dấu ấn riêng.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <Button asChild size="lg" className="min-h-12 rounded-[32px] bg-orange-500 px-6 font-bold text-white hover:bg-orange-600 sm:px-8">
@@ -208,7 +206,7 @@ export default function Home() {
 const industries = [
   {
     name: "Ngân sách linh hoạt",
-    description: "Gói dịch vụ tùy chỉnh theo quy mô <br /> và ngân sách doanh nghiệp, <br /> không phát sinh chi phí ngoài.",
+    description: "Gói dịch vụ tùy chỉnh theo quy mô và ngân sách doanh nghiệp, <br /> không phát sinh chi phí ngoài.",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"

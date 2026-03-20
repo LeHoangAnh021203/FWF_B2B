@@ -81,7 +81,7 @@ export function BookingSection() {
           </a>
           <h2 className="mb-4 pt-5 text-xl font-bold text-black md:text-3xl">Doanh Nghiệp Của Bạn Đã Sẵn Sàng Chưa?</h2>
           <p className="mb-8 text-sm leading-7 text-muted-foreground md:text-[16px]">
-            Hãy cung cấp cho chúng tôi thông tin của bạn để chúng tôi biết rằng bạn đã sẵn sàng <br className="hidden sm:block" /> để hợp tác với FWF nhé!
+            Hãy cung cấp cho chúng tôi thông tin của bạn để chúng tôi biết rằng <br /> bạn đã sẵn sàng để hợp tác với FWF nhé!
           </p>
           <form className="mt-8 space-y-6 md:mt-10" onSubmit={handleSubmitBooking}>
             <div className="grid gap-5 md:grid-cols-2">
