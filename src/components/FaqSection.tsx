@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDown } from "lucide-react"
+import Image from "next/image"
 
 import { faqItems } from "@/components/home-data"
 
@@ -9,12 +10,26 @@ export function FaqSection() {
   const [openFaqIndex, setOpenFaqIndex] = useState(-1)
 
   return (
-    <section id="faq" className="relative overflow-hidden bg-gradient-to-b from-white via-orange-50/60 to-white py-20">
+    <section id="faq" className="relative overflow-hidden py-20">
+      <Image
+        src="/Fox Swat/S7B.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="pointer-events-none select-none object-cover object-center"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,248,240,0.72),rgba(255,246,237,0.64))]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.18),transparent_55%)]" />
       <div className="container relative mx-auto px-4">
         <div className="mx-auto mb-14 max-w-3xl text-center">
-          <p className="mb-4 text-sm font-bold uppercase text-orange-300 md:text-base">Câu Hỏi Thường Gặp</p>
-          <h2 className="text-3xl font-bold text-orange-500 md:text-5xl">Dịch vụ Face Wash Fox</h2>
+          <div className="inline-flex flex-col items-center rounded-[32px] border border-white/55 bg-white/22 px-6 py-5 shadow-[0_18px_45px_-28px_rgba(234,88,12,0.35)] backdrop-blur-md md:px-10">
+            <p className="mb-3 bg-gradient-to-r from-orange-300 via-orange-400 to-amber-300 bg-clip-text text-sm font-black uppercase tracking-[0.12em] text-transparent drop-shadow-[0_3px_10px_rgba(251,146,60,0.22)] md:text-base">
+              Câu Hỏi Thường Gặp
+            </p>
+            <h2 className="bg-gradient-to-b from-[#ffb15f] via-orange-500 to-[#f97316] bg-clip-text text-3xl font-extrabold text-transparent drop-shadow-[0_5px_16px_rgba(249,115,22,0.18)] md:text-5xl">
+              Dịch vụ Face Wash Fox
+            </h2>
+          </div>
         </div>
 
         <div className="mx-auto grid max-w-6xl gap-4 lg:grid-cols-2 lg:gap-5">

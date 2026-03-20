@@ -17,9 +17,11 @@ export default function Home() {
       <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white">
         <div className="container relative z-10 mx-auto px-4 pb-16 pt-24 md:pt-32">
           <div className="mx-auto mb-16 max-w-4xl text-center">
+            <p className="mb-4 text-sm font-bold uppercase text-orange-300 md:text-base">giới thiệu</p>
             <p className="mx-auto mb-6 inline-flex max-w-full items-center gap-3 rounded-full border border-orange-200 bg-white/90 px-4 py-3 text-[11px] font-bold text-orange-500 shadow-[0_20px_40px_-28px_rgba(234,88,12,0.45)] backdrop-blur-sm sm:px-6 sm:text-sm md:px-8 md:py-4 md:text-base">
+
               <span className="hero-status-dot h-2.5 w-2.5 rounded-full bg-orange-500 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5" />
-              <span className="truncate">B2B Giải Pháp Doanh Nghiệp</span>
+              <span className="truncate">FACE WASH FOX FOR BUSINESS</span>
             </p>
             <h1 className="mb-6 text-2xl font-bold text-[#0097b2] sm:text-3xl md:text-4xl lg:text-3xl">
               Để nhân viên cảm nhận được sự quan tâm <br />
@@ -43,7 +45,7 @@ export default function Home() {
 
           <div className="relative mx-auto max-w-5xl">
             <video
-              src="/video/To_video_ngn_202512051030.mp4"
+              src="/video/B2B (1920X1920).mp4"
               className="w-full rounded-2xl shadow-2xl"
               autoPlay
               muted
