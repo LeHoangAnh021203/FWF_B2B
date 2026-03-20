@@ -38,7 +38,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Gói liệu trình chuyên gia",
     description:
       "<strong>Card Voucher là gói quà tặng cao cấp</strong> với mệnh giá cố định, tương ứng trực tiếp một liệu trình trọn gói tại Face Wash Fox, mang đến trải nghiệm chuyên sâu ngay lập tức.",
-    image: "/Fox Swat/combo2 02-03.png",
+    image: "/Fox Swat/combo2 02-03.webp",
     tags: [
       "Trải nghiệm chăm sóc da chuẩn chuyên gia",
       "Tạo cảm giác được chăm sóc thực sự",

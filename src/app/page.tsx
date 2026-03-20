@@ -43,10 +43,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative mx-auto max-w-5xl">
+          <div className="relative mx-auto aspect-[1184/662] max-w-[min(92vw,1184px)]">
             <video
-              src="/video/B2B (1920X1920).mp4"
-              className="w-full rounded-2xl shadow-2xl"
+              src="/video/B2B-1080.mp4"
+              className="h-full w-full rounded-2xl bg-black object-contain shadow-2xl"
+              preload="metadata"
               autoPlay
               muted
               loop

@@ -12,7 +12,7 @@ export function FaqSection() {
   return (
     <section id="faq" className="relative overflow-hidden py-20">
       <Image
-        src="/Fox Swat/S7B.jpg"
+        src="/Fox Swat/S7B.webp"
         alt=""
         fill
         sizes="100vw"
@@ -22,11 +22,11 @@ export function FaqSection() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(circle_at_top,rgba(251,146,60,0.18),transparent_55%)]" />
       <div className="container relative mx-auto px-4">
         <div className="mx-auto mb-14 max-w-3xl text-center">
-          <div className="inline-flex flex-col items-center rounded-[32px] border border-white/55 bg-white/22 px-6 py-5 shadow-[0_18px_45px_-28px_rgba(234,88,12,0.35)] backdrop-blur-md md:px-10">
-            <p className="mb-3 bg-gradient-to-r from-orange-300 via-orange-400 to-amber-300 bg-clip-text text-sm font-black uppercase tracking-[0.12em] text-transparent drop-shadow-[0_3px_10px_rgba(251,146,60,0.22)] md:text-base">
+          <div className="inline-flex flex-col items-center rounded-[32px] border border-white/60 bg-white/35 px-6 py-5 shadow-[0_18px_45px_-28px_rgba(234,88,12,0.35)] backdrop-blur-sm md:px-10 md:backdrop-blur-md">
+            <p className="mb-3 text-sm font-black uppercase tracking-[0.12em] text-orange-400 drop-shadow-[0_3px_10px_rgba(251,146,60,0.22)] md:bg-gradient-to-r md:from-orange-300 md:via-orange-400 md:to-amber-300 md:bg-clip-text md:text-transparent md:text-base">
               Câu Hỏi Thường Gặp
             </p>
-            <h2 className="bg-gradient-to-b from-[#ffb15f] via-orange-500 to-[#f97316] bg-clip-text text-3xl font-extrabold text-transparent drop-shadow-[0_5px_16px_rgba(249,115,22,0.18)] md:text-5xl">
+            <h2 className="text-3xl font-extrabold text-orange-500 drop-shadow-[0_5px_16px_rgba(249,115,22,0.18)] md:bg-gradient-to-b md:from-[#ffb15f] md:via-orange-500 md:to-[#f97316] md:bg-clip-text md:text-5xl md:text-transparent">
               Dịch vụ Face Wash Fox
             </h2>
           </div>
