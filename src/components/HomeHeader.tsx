@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
@@ -29,15 +28,7 @@ export function HomeHeader() {
     >
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between gap-3 md:h-20 md:gap-6">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/logo_FWF/Logo tiêu chuẩn.png"
-              alt="Face Wash Fox"
-              width={144}
-              height={144}
-              className="h-12 w-auto md:h-20"
-            />
-          </Link>
+          <div aria-hidden="true" className="h-12 w-[88px] shrink-0 md:h-20 md:w-[144px]" />
           <nav className="nav-shimmer hidden items-center gap-3 rounded-full border border-orange-300/80 bg-white/90 px-4 py-3 shadow-[0_18px_40px_-28px_rgba(234,88,12,0.38)] backdrop-blur md:flex">
             <Link
               href="https://menu.facewashfox.com/"

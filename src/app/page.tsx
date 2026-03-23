@@ -13,7 +13,16 @@ export default function Home() {
   return (
     <div id="top">
       <HomeHeader />
+      <div>
+        <Image
+          src="/logo_FWF/banner.png"
+          alt="Banner Face Wash Fox"
+          width={1600}
+          height={900}
+          className="h-auto w-full object-cover"
+        />
 
+      </div>
       <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white">
         <div className="container relative z-10 mx-auto px-4 pb-16 pt-24 md:pt-32">
           <div className="mx-auto mb-16 max-w-4xl text-center">
