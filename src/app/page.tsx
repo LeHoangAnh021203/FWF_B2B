@@ -109,7 +109,7 @@ export default function Home() {
           <div className="mx-auto w-full max-w-5xl">
             <div className="mb-10 max-w-3xl text-center lg:mb-14 lg:text-left">
 
-              <h2 className="text-3xl font-bold leading-tight text-orange-500 md:text-4xl lg:text-5xl">
+              <h2 className="text-3xl font-bold leading-tight text-orange-500 md:text-4xl lg:text-4xl">
                 Điều khiến Face Wash Fox trở thành <br /> lựa chọn của nhiều doanh nghiệp
               </h2>
             </div>
