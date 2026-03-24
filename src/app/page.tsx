@@ -1,7 +1,6 @@
 import { ArrowRight, ChevronDown, ChevronUp, Phone } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import foxMascot from "../../public/logo_FWF/Bản sao của Fox_2_Alpha_01 (1).png"
 
 import { BookingSection } from "@/components/BookingSection"
 import { FaqSection } from "@/components/FaqSection"
@@ -58,7 +57,7 @@ export default function Home() {
           <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[minmax(340px,660px)_minmax(0,1fr)] lg:gap-16">
             <div className="order-2 mx-auto w-full max-w-[620px] sm:max-w-[400px] lg:order-1 lg:max-w-[460px]">
               <Image
-                src={foxMascot}
+                src="/logo_FWF/Bản sao của Fox_2_Alpha_01 (1).png"
                 alt="Face Wash Fox mascot"
                 priority
                 sizes="(max-width: 640px) 80vw, (max-width: 1024px) 42vw, 460px"
