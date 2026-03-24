@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ArrowUpRight, GamepadDirectional } from "lucide-react"
 import Image from "next/image"
 
@@ -11,6 +11,31 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 
 export function FoxSwatSection() {
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null)
+  const [previewStates, setPreviewStates] = useState<Record<string, { current: number; previous: number }>>({})
+
+  useEffect(() => {
+    const rotatingStudies = caseStudies.filter((study) => study.previewImages?.length)
+
+    if (!rotatingStudies.length) return
+
+    const interval = window.setInterval(() => {
+      setPreviewStates((current) => {
+        const next = { ...current }
+        for (const study of rotatingStudies) {
+          const total = study.previewImages?.length ?? 0
+          if (!total) continue
+          const currentIndex = current[study.title]?.current ?? 0
+          next[study.title] = {
+            previous: currentIndex,
+            current: (currentIndex + 1) % total,
+          }
+        }
+        return next
+      })
+    }, 2200)
+
+    return () => window.clearInterval(interval)
+  }, [])
 
   return (
     <section id="fox-swat" className="relative z-20 bg-gradient-to-b from-orange-100 via-white to-orange-50 py-20">
@@ -40,14 +65,36 @@ export function FoxSwatSection() {
                     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(251,146,60,0.12),transparent_28%)]" />
                     <div className="pointer-events-none absolute right-4 top-4 h-12 w-12 rounded-full bg-orange-200/25 blur-xl transition-transform duration-300 group-hover:scale-110 group-hover:bg-orange-300/35" />
                     <div className="relative h-52 overflow-hidden rounded-[24px] sm:h-56 lg:h-[300px]">
-                      <Image
-                        src={study.image}
-                        alt={study.title}
-                        fill
-                        priority={index < 3}
-                        sizes="(max-width: 1024px) 100vw, 44vw"
-                        className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
-                      />
+                      {study.previewImages?.length ? (
+                        <div className="relative h-full w-full overflow-hidden rounded-[22px] border border-orange-100 bg-white">
+                          {study.previewImages.map((previewImage, previewIndex) => (
+                            <Image
+                              key={previewImage}
+                              src={previewImage}
+                              alt={`${study.title} voucher ${previewIndex + 1}`}
+                              fill
+                              priority={index < 3 && previewIndex === 0}
+                              sizes="(max-width: 1024px) 100vw, 44vw"
+                              className={`object-cover object-center transition-transform duration-700 ${
+                                previewIndex === (previewStates[study.title]?.current ?? 0)
+                                  ? "translate-x-0 z-20"
+                                  : previewIndex === (previewStates[study.title]?.previous ?? -1)
+                                    ? "-translate-x-full z-10"
+                                    : "translate-x-full z-0"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <Image
+                          src={study.image}
+                          alt={study.title}
+                          fill
+                          priority={index < 3}
+                          sizes="(max-width: 1024px) 100vw, 44vw"
+                          className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="px-2 py-1 md:px-3">
@@ -117,7 +164,7 @@ export function FoxSwatSection() {
                       >
                         <Image
                           src={voucherImage}
-                          alt={`Voucher FOX CASH ${index + 1}`}
+                          alt={`Voucher ${selectedStudy.eyebrow} ${index + 1}`}
                           width={800}
                           height={800}
                           className="h-auto w-full rounded-[14px] object-cover"

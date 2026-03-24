@@ -6,6 +6,7 @@ export type CaseStudy = {
   title: string;
   description: string;
   image: string;
+  previewImages?: string[];
   tags: string[];
   detailPoints: string[];
   voucherImages?: string[];
@@ -47,7 +48,12 @@ export const caseStudies: CaseStudy[] = [
     title: "Gói liệu trình chuyên gia",
     description:
       "<strong>Card Voucher là gói quà tặng cao cấp</strong> với mệnh giá cố định, tương ứng trực tiếp một liệu trình trọn gói tại Face Wash Fox, mang đến trải nghiệm chuyên sâu ngay lập tức.",
-    image: "/Fox Swat/combo2 02-03.webp",
+    image: "/voucher/voucher 7.png",
+    previewImages: [
+      "/voucher/voucher 7.png",
+      "/voucher/voucher 5.png",
+      "/voucher/voucher 1.png",
+    ],
     tags: [
       "Trải nghiệm chăm sóc da chuẩn chuyên gia",
       "Tạo cảm giác được chăm sóc thực sự",
@@ -56,6 +62,11 @@ export const caseStudies: CaseStudy[] = [
     detailPoints: [
       "Doanh nghiệp chọn sẵn các liệu trình khuyên dùng từ nhà Cáo để làm quà tặng chăm sóc cho nhân viên",
       "Nhân viên mang card đến bất kỳ cửa hàng nào trong hệ thống để sử dụng đầy đủ quy trình: soi da, tư vấn và thực hiện liệu trình chuyên nghiệp.",
+    ],
+    voucherImages: [
+      "/voucher/voucher 7.png",
+      "/voucher/voucher 5.png",
+      "/voucher/voucher 1.png",
     ],
   },
   {
