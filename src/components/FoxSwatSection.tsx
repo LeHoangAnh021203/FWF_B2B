@@ -53,11 +53,10 @@ export function FoxSwatSection() {
             >
               <Card className="relative mt-0 overflow-visible border border-orange-200/70 bg-white/95 shadow-[0_18px_40px_-26px_rgba(234,88,12,0.26)] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-orange-300 group-hover:shadow-[0_22px_48px_-28px_rgba(234,88,12,0.34)]">
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.18),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(254,215,170,0.28),transparent_30%)] opacity-80" />
-                <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent opacity-70" />
                 <div className="pointer-events-none absolute inset-0 z-10 rounded-[inherit] bg-[rgba(130,99,88,0.42)] opacity-0 backdrop-blur-[8px] transition-opacity duration-300 group-hover:opacity-100" />
-                <CardContent className="relative grid gap-5 p-4 pt-8 text-orange-500 sm:p-5 md:p-6 md:pt-9 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center lg:gap-8">
+                <CardContent className="relative grid gap-5 p-4 pt-16 text-orange-500 sm:p-5 sm:pt-16 md:p-6 md:pt-18 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center lg:gap-8">
                   <div
-                    className={`absolute left-1/2 top-0 z-30 -translate-x-1/2 -translate-y-[35%] rounded-full border bg-white px-3 py-1 text-sm font-extrabold uppercase tracking-[0.2em] shadow-[0_12px_30px_-18px_rgba(15,23,42,0.28)] sm:px-4 sm:py-1.5 sm:text-base lg:text-xl ${study.eyebrowClassName}`}
+                    className={`absolute left-1/2 top-5 z-30 -translate-x-1/2 rounded-full border bg-white px-3 py-1 text-sm font-extrabold uppercase tracking-[0.2em] shadow-[0_12px_30px_-18px_rgba(15,23,42,0.28)] sm:px-4 sm:py-1.5 sm:text-base lg:text-xl ${study.eyebrowClassName}`}
                   >
                     {study.eyebrow}
                   </div>

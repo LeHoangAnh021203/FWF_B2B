@@ -15,7 +15,7 @@ export default function Home() {
       <HomeHeader />
       <div className="relative w-full overflow-hidden bg-white">
         <Image
-          src="/logo_FWF/banner2.png"
+          src="/logo_FWF/banner3.png"
           alt="Banner Face Wash Fox"
           width={1920}
           height={1080}
@@ -55,7 +55,8 @@ export default function Home() {
           </div>
 
           <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[minmax(340px,660px)_minmax(0,1fr)] lg:gap-16">
-            <div className="order-2 mx-auto w-full max-w-[620px] sm:max-w-[400px] lg:order-1 lg:max-w-[460px]">
+            <div className="relative order-2 mx-auto w-full max-w-[620px] sm:max-w-[400px] lg:order-1 lg:max-w-[460px]">
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-[68%] w-[68%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.96)_0%,rgba(255,237,213,0.7)_42%,rgba(251,146,60,0.2)_68%,transparent_100%)] blur-3xl" />
               <Image
                 src="/logo_FWF/Cao.png"
                 alt="Face Wash Fox mascot"
@@ -63,7 +64,7 @@ export default function Home() {
                 height={1920}
                 priority
                 sizes="(max-width: 640px) 80vw, (max-width: 1024px) 42vw, 460px"
-                className="h-auto w-full object-contain drop-shadow-[0_30px_40px_rgba(249,115,22,0.18)]"
+                className="relative z-10 h-auto w-full object-contain brightness-[1.08] contrast-[1.04] saturate-[1.08] drop-shadow-[0_30px_40px_rgba(249,115,22,0.18)] drop-shadow-[0_0_38px_rgba(255,237,213,0.65)]"
               />
             </div>
 
@@ -291,7 +292,7 @@ const industries = [
   {
     name: "Trải nghiệm chăm sóc khác biệt",
     description: "Mang đến trải nghiệm chăm sóc da thiết thực, giúp nhân viên cảm thấy được quan tâm và nâng cao hình ảnh doanh nghiệp.",
-    layoutClass: "lg:col-start-2 lg:row-start-1 lg:translate-y-6",
+    layoutClass: "lg:col-start-2 lg:row-start-1",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -336,7 +337,7 @@ const industries = [
   {
     name: "Quy trình chuyên nghiệp",
     description: "Đội ngũ chuyên viên được đào tạo bài bản, quy trình chuẩn hóa từ soi da AI đến liệu trình chăm sóc, đảm bảo chất lượng đồng bộ",
-    layoutClass: "lg:col-start-2 lg:row-start-2 lg:translate-y-6",
+    layoutClass: "lg:col-start-2 lg:row-start-2",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
