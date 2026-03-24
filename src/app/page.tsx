@@ -1,6 +1,7 @@
 import { ArrowRight, ChevronDown, ChevronUp, Phone } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import foxMascot from "../../public/logo_FWF/Bản sao của Fox_2_Alpha_01 (1).png"
 
 import { BookingSection } from "@/components/BookingSection"
 import { FaqSection } from "@/components/FaqSection"
@@ -25,7 +26,7 @@ export default function Home() {
           className="h-auto w-full"
         />
       </div>
-      <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white">
+      <section className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(255,216,122,0.28),transparent_28%),linear-gradient(180deg,#fffdf8_0%,#fff6ea_54%,#fffdf8_100%)]">
         <div className="container relative z-10 mx-auto px-4 pb-16 pt-24 md:pt-32">
           <div className="mx-auto mb-16 max-w-4xl text-center">
             <p className="mb-4 text-sm font-bold uppercase text-orange-300 md:text-base">giới thiệu</p>
@@ -54,16 +55,34 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="relative mx-auto aspect-[1184/662] max-w-[min(92vw,1184px)]">
-            <video
-              src="/video/B2B-1080.mp4"
-              className="h-full w-full rounded-2xl bg-black object-contain shadow-2xl"
-              preload="metadata"
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
+          <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[minmax(340px,660px)_minmax(0,1fr)] lg:gap-16">
+            <div className="order-2 mx-auto w-full max-w-[620px] sm:max-w-[400px] lg:order-1 lg:max-w-[460px]">
+              <Image
+                src={foxMascot}
+                alt="Face Wash Fox mascot"
+                priority
+                sizes="(max-width: 640px) 80vw, (max-width: 1024px) 42vw, 460px"
+                className="h-auto w-full object-contain drop-shadow-[0_30px_40px_rgba(249,115,22,0.18)]"
+              />
+            </div>
+
+            <div className="order-1 lg:order-2">
+              <div className="rounded-[38px] bg-[linear-gradient(180deg,#ffd24a_0%,#ffbf00_100%)] p-3 shadow-[0_28px_70px_-30px_rgba(234,179,8,0.8)] sm:p-4 md:rounded-[42px] md:p-5">
+                <div className="rounded-[30px] bg-black p-2 md:rounded-[34px] md:p-3">
+                  <div className="relative mx-auto aspect-[4/5] w-full overflow-hidden rounded-[24px] bg-black md:rounded-[28px]">
+                    <video
+                      src="/video/B2B_2.mp4"
+                      className="h-full w-full object-cover"
+                      preload="metadata"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 z-10 pb-8 text-center">
