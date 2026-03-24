@@ -13,15 +13,17 @@ export default function Home() {
   return (
     <div id="top">
       <HomeHeader />
-      <div>
+      <div className="relative w-full overflow-hidden bg-white">
         <Image
-          src="/logo_FWF/banner.png"
+          src="/logo_FWF/banner2.png"
           alt="Banner Face Wash Fox"
-          width={1600}
-          height={900}
-          className="h-auto w-full object-cover"
+          width={1920}
+          height={1080}
+          priority
+          quality={100}
+          sizes="100vw"
+          className="h-auto w-full"
         />
-
       </div>
       <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-white via-orange-50 to-white">
         <div className="container relative z-10 mx-auto px-4 pb-16 pt-24 md:pt-32">
