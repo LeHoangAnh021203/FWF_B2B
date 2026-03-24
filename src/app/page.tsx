@@ -132,7 +132,7 @@ export default function Home() {
                         <ChevronDown className="h-5 w-5" />
                       </div>
                     </div>
-                    <h3 className="max-w-[14ch] text-xl font-bold leading-tight text-orange-950 md:text-2xl">
+                    <h3 className="max-w-[20ch] text-xl font-bold leading-tight text-orange-950 md:text-2xl">
                       {industry.name}
                     </h3>
                   </summary>

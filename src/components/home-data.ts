@@ -20,7 +20,7 @@ export const caseStudies: CaseStudy[] = [
     dialogBorderClassName: "border-lime-300",
     title: "Gói linh hoạt, cá nhân hóa tối đa",
     description:
-      "Cash Voucher là giải pháp quà tặng đơn giản và linh hoạt nhất dành cho doanh nghiệp muốn tri ân nhân viên",
+      "Cash Voucher là giải pháp quà tặng quy đổi như tiền mặt, linh hoạt và đơn giản nhất dành cho doanh nghiệp muốn tri ân nhân viên hay đối tác.",
     image: "/Fox Swat/fx3.webp",
     tags: [
       "Cá nhân hóa 100%",
@@ -29,7 +29,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     detailPoints: [
       "Mệnh giá đa dạng: 50.000 VNĐ – 100.000 VNĐ – 200.000 VNĐ – 500.000 VNĐ (có thể tùy chỉnh theo nhu cầu doanh nghiệp).",
-      "Cách sử dụng: Nhân viên nhận voucher như một khoản tiền mặt kỹ thuật số hoặc vật lý, mang đến bất kỳ cửa hàng Face Wash Fox nào trên toàn quốc để trừ trực tiếp vào chi phí dịch vụ chăm sóc da",
+      "Cách sử dụng: Nhân viên nhận voucher như một khoản tiền mặt, mang đến bất kỳ cửa hàng Face Wash Fox nào trên toàn quốc để trừ trực tiếp vào chi phí dịch vụ chăm sóc da",
     ],
     voucherImages: [
       "/voucher/voucher 1.png",
@@ -47,7 +47,7 @@ export const caseStudies: CaseStudy[] = [
     dialogBorderClassName: "border-sky-300",
     title: "Gói liệu trình chuyên gia",
     description:
-      "<strong>Card Voucher là gói quà tặng cao cấp</strong> với mệnh giá cố định, tương ứng trực tiếp một liệu trình trọn gói tại Face Wash Fox, mang đến trải nghiệm chuyên sâu ngay lập tức.",
+      "Card Voucher dịch vụ là quà tặng với mệnh giá cố định, tương ứng trực tiếp một liệu trình trọn gói tại Face Wash Fox, mang đến trải nghiệm chuyên sâu ngay lập tức.",
     image: "/voucher/voucher 7.png",
     previewImages: [
       "/voucher/voucher 7.png",

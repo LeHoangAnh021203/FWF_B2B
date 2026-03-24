@@ -115,8 +115,18 @@ export function FoxSwatSection() {
                         </span>
                       ))}
                     </div>
+                    <div className="mt-5 lg:hidden">
+                      <Button
+                        type="button"
+                        onClick={() => setSelectedStudy(study)}
+                        className="rounded-full bg-orange-500 px-6 py-3 text-sm font-bold text-white shadow-[0_18px_38px_-20px_rgba(234,88,12,0.45)] transition-all duration-300 hover:bg-orange-600"
+                      >
+                        Chi tiết
+                        <ArrowUpRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100">
+                  <div className="pointer-events-none absolute inset-0 z-20 hidden items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100 lg:flex">
                     <Button
                       type="button"
                       onClick={() => setSelectedStudy(study)}
