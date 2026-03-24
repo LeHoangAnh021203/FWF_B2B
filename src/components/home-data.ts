@@ -8,6 +8,7 @@ export type CaseStudy = {
   image: string;
   tags: string[];
   detailPoints: string[];
+  voucherImages?: string[];
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -28,6 +29,14 @@ export const caseStudies: CaseStudy[] = [
     detailPoints: [
       "Mệnh giá đa dạng: 50.000 VNĐ – 100.000 VNĐ – 200.000 VNĐ – 500.000 VNĐ (có thể tùy chỉnh theo nhu cầu doanh nghiệp).",
       "Cách sử dụng: Nhân viên nhận voucher như một khoản tiền mặt kỹ thuật số hoặc vật lý, mang đến bất kỳ cửa hàng Face Wash Fox nào trên toàn quốc để trừ trực tiếp vào chi phí dịch vụ chăm sóc da",
+    ],
+    voucherImages: [
+      "/voucher/voucher 1.png",
+      "/voucher/voucher 2.png",
+      "/voucher/voucher 3.png",
+      "/voucher/voucher 4.png",
+      "/voucher/voucher 5.png",
+      "/voucher/voucher 6.png",
     ],
   },
   {

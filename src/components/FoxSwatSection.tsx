@@ -105,6 +105,28 @@ export function FoxSwatSection() {
                   </li>
                 ))}
               </ul>
+
+              {selectedStudy.voucherImages?.length ? (
+                <div className="space-y-3">
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-orange-400">Voucher mẫu</p>
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                    {selectedStudy.voucherImages.map((voucherImage, index) => (
+                      <div
+                        key={voucherImage}
+                        className="overflow-hidden rounded-[20px] border border-orange-100 bg-orange-50/60 p-2 shadow-[0_14px_30px_-24px_rgba(234,88,12,0.35)]"
+                      >
+                        <Image
+                          src={voucherImage}
+                          alt={`Voucher FOX CASH ${index + 1}`}
+                          width={800}
+                          height={800}
+                          className="h-auto w-full rounded-[14px] object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </div>
           ) : null}
         </DialogContent>
