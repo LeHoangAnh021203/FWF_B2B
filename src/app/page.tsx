@@ -92,44 +92,69 @@ export default function Home() {
 
       <FoxSwatSection />
 
-      <section id="services" className="bg-gradient-to-b from-white via-orange-50 to-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto mb-16 max-w-3xl text-center">
-            <h2 className="mb-4 text-3xl font-bold text-orange-500 md:text-4xl">
-              Điều khiến Face Wash Fox trở thành <br /> lựa chọn của nhiều doanh nghiệp
-            </h2>
+      <section id="services" className="overflow-hidden bg-[linear-gradient(180deg,#fffdfa_0%,#fff4e8_52%,#ffffff_100%)] py-20 md:py-24">
+        <div className="mx-auto grid max-w-[1400px] items-start gap-8 px-4 xl:grid-cols-[120px_minmax(0,1fr)_120px] xl:gap-10">
+          <div className="relative hidden h-[640px] overflow-hidden rounded-[36px] xl:block">
+            <Image
+              src="/FAQ_Images/Copy of Untitled279_20241128105813 (1).png"
+              alt=""
+              fill
+              sizes="120px"
+              className="object-cover blur-[2px]"
+            />
+            <div className="absolute inset-0 bg-white/45" />
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-            {industries.map((industry) => (
-              <div key={industry.name} className="group relative h-full">
-                <div className="relative h-full overflow-hidden rounded-[28px] bg-[#fff5eb] shadow-[0_18px_50px_-30px_rgba(234,88,12,0.35)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_24px_60px_-30px_rgba(234,88,12,0.42)]">
-                  <Image
-                    src="/FAQ_Images/Copy of Untitled279_20241128105813 (1).png"
-                    alt=""
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-                    className="pointer-events-none select-none object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                  />
-                  <div className="relative m-3 flex h-[calc(100%-24px)] min-h-[296px] flex-col rounded-[22px] bg-[#fff4ea]/96 p-6 backdrop-blur-[2px] md:m-4 md:min-h-[328px] md:rounded-[26px] md:p-8">
-                    <div className="relative mb-6 flex justify-center">
-                      <div className="flex h-18 w-18 items-center justify-center rounded-full border border-orange-200/80 bg-[linear-gradient(180deg,rgba(255,197,143,0.98),rgba(255,173,92,0.95))] shadow-[0_16px_30px_-18px_rgba(234,88,12,0.55)] transition-transform duration-300 group-hover:scale-110">
-                        <div className="absolute inset-[-8px] rounded-full bg-orange-400/30 blur-xl transition-all duration-300 group-hover:bg-orange-300/40" />
-                        <div className="relative z-10 text-white drop-shadow-[0_2px_6px_rgba(194,65,12,0.35)] [&_svg]:h-8 [&_svg]:w-8">
+
+          <div className="mx-auto w-full max-w-5xl">
+            <div className="mb-10 max-w-3xl text-center lg:mb-14 lg:text-left">
+
+              <h2 className="text-3xl font-bold leading-tight text-orange-500 md:text-4xl lg:text-5xl">
+                Điều khiến Face Wash Fox trở thành lựa chọn của nhiều doanh nghiệp
+              </h2>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-2 lg:grid-rows-2 lg:gap-x-7 lg:gap-y-6">
+              {industries.map((industry) => (
+                <details
+                  key={industry.name}
+                  className={`group rounded-[30px] bg-[linear-gradient(180deg,rgba(255,244,233,0.96),rgba(255,236,214,0.94))] p-3 shadow-[0_18px_45px_-30px_rgba(234,88,12,0.28)] transition-all duration-300 open:bg-[linear-gradient(180deg,rgba(255,239,221,0.98),rgba(255,228,198,0.96))] open:shadow-[0_24px_55px_-28px_rgba(234,88,12,0.34)] ${industry.layoutClass}`}
+                >
+                  <summary className="flex min-h-[196px] cursor-pointer list-none flex-col justify-between rounded-[24px] border border-orange-100/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.65),rgba(255,247,239,0.38))] p-6 marker:hidden">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-[20px] bg-[linear-gradient(180deg,#ffbf69_0%,#ff9f1c_100%)] text-white shadow-[0_16px_35px_-20px_rgba(234,88,12,0.8)] [&_svg]:h-8 [&_svg]:w-8">
+                        <div className="absolute inset-0 rounded-[20px] bg-white/10" />
+                        <div className="relative z-10">
                           <industry.icon />
                         </div>
                       </div>
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-orange-200 bg-white/75 text-orange-400 transition-transform duration-300 group-open:rotate-180">
+                        <ChevronDown className="h-5 w-5" />
+                      </div>
                     </div>
-                    <h3 className="mb-3 text-[18px] font-semibold text-orange-950 transition-colors duration-300 group-hover:text-orange-600">
+                    <h3 className="max-w-[14ch] text-xl font-bold leading-tight text-orange-950 md:text-2xl">
                       {industry.name}
                     </h3>
+                  </summary>
+                  <div className="px-2 pb-2 pt-4">
                     <p
-                      className="flex-1 text-sm leading-7 text-stone-600 transition-colors duration-300 group-hover:text-stone-800"
+                      className="text-base leading-7 text-stone-600"
                       dangerouslySetInnerHTML={{ __html: industry.description }}
                     />
                   </div>
-                </div>
-              </div>
-            ))}
+                </details>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative hidden h-[640px] overflow-hidden rounded-[36px] xl:block">
+            <Image
+              src="/FAQ_Images/Copy of Untitled279_20241128105813 (1).png"
+              alt=""
+              fill
+              sizes="120px"
+              className="object-cover blur-[2px]"
+            />
+            <div className="absolute inset-0 bg-white/45" />
           </div>
         </div>
       </section>
@@ -240,6 +265,7 @@ const industries = [
   {
     name: "Ngân sách linh hoạt",
     description: "Gói dịch vụ tùy chỉnh theo quy mô và ngân sách doanh nghiệp, <br /> không phát sinh chi phí ngoài.",
+    layoutClass: "lg:col-start-1 lg:row-start-1",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -264,6 +290,7 @@ const industries = [
   {
     name: "Trải nghiệm chăm sóc khác biệt",
     description: "Mang đến trải nghiệm chăm sóc da thiết thực, giúp nhân viên cảm thấy được quan tâm và nâng cao hình ảnh doanh nghiệp.",
+    layoutClass: "lg:col-start-2 lg:row-start-1 lg:translate-y-6",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -286,6 +313,7 @@ const industries = [
   {
     name: "Dễ dàng sử dụng",
     description: "Nhân viên có thể dễ dàng sử dụng dịch vụ tại hơn 50 cửa hàng Facewashfox trên toàn quốc",
+    layoutClass: "lg:col-start-1 lg:row-start-2",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -307,6 +335,7 @@ const industries = [
   {
     name: "Quy trình chuyên nghiệp",
     description: "Đội ngũ chuyên viên được đào tạo bài bản, quy trình chuẩn hóa từ soi da AI đến liệu trình chăm sóc, đảm bảo chất lượng đồng bộ",
+    layoutClass: "lg:col-start-2 lg:row-start-2 lg:translate-y-6",
     icon: () => (
       <svg
         xmlns="http://www.w3.org/2000/svg"
