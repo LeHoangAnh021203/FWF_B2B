@@ -57,8 +57,10 @@ export default function Home() {
           <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[minmax(340px,660px)_minmax(0,1fr)] lg:gap-16">
             <div className="order-2 mx-auto w-full max-w-[620px] sm:max-w-[400px] lg:order-1 lg:max-w-[460px]">
               <Image
-                src="/logo_FWF/Bản sao của Fox_2_Alpha_01 (1).png"
+                src="/logo_FWF/Cao.png"
                 alt="Face Wash Fox mascot"
+                width={1920}
+                height={1920}
                 priority
                 sizes="(max-width: 640px) 80vw, (max-width: 1024px) 42vw, 460px"
                 className="h-auto w-full object-contain drop-shadow-[0_30px_40px_rgba(249,115,22,0.18)]"
@@ -108,7 +110,7 @@ export default function Home() {
             <div className="mb-10 max-w-3xl text-center lg:mb-14 lg:text-left">
 
               <h2 className="text-3xl font-bold leading-tight text-orange-500 md:text-4xl lg:text-5xl">
-                Điều khiến Face Wash Fox trở thành lựa chọn của nhiều doanh nghiệp
+                Điều khiến Face Wash Fox trở thành <br /> lựa chọn của nhiều doanh nghiệp
               </h2>
             </div>
 
